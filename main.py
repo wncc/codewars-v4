@@ -30,7 +30,7 @@ random.seed(5)
 class Game():
 
         
-    def __init__(self, dim, map_img, redt, bluet):
+    def __init__(self, dim, redt, bluet):
         pygame.init()
         self.redt = redt
         self.bluet = bluet
@@ -52,39 +52,39 @@ class Game():
                 island2.append((flag2[0] + i, flag2[1] + j))
                 island3.append((flag3[0] + i, flag3[1] + j))
 
-        self.flag1 = flag1
+        self.flag1 = flag1 # flag has the center of each island
         self.flag2 = flag2
         self.flag3 = flag3
 
-        self.island1 = island1
+        self.island1 = island1 # island has the coordinates of each cell in the island
         self.island2 = island2
         self.island3 = island3
 
-        self.__rum = Group()
-        self.__gunpowder = Group()
-        self.__rum = Group()
+        # self.__rum = Group()
+        # self.__gunpowder = Group()
+        # self.__rum = Group()
 
-        self.__resources, self.__rum, self.__gunpowder, self.__wood = self.create_map(map_img)
+        self.__resources, self.__rum, self.__gunpowder, self.__wood = self.create_map()
         # self.__resources[self.redbasepos[1]][self.redbasepos[0]] = 0
         # self.__resources[self.bluebasepos[1]][self.bluebasepos[0]] = 0
         self.GlobalPirateCount = 0
         self.explosion = pygame.image.load("explode.png")
         self.rate = 8
 
-        self.__collectibles = []
+        self.__collectibles = [] # this is a list of lists of collectibles
         
-        self.__PositionToPirate = {} #???????????????????????????
+        self.__PositionToPirate = {} # this is a dictionary that maps the position of the collectible to the pirate that is currently on it
 
         for i in range(self.__dim[0]):
             Z = []
             for j in range(self.__dim[1]):
-                Z.append(Collectible(self.screen, i*20, j*20, self.__resources[j][i]))
+                Z.append(Collectible(self.screen, i*20, j*20, self.__resources[i][j]))
             self.__collectibles.append(Z)
         
         
 
-        self.__bluebots = Group()
-        self.__redbots = Group()
+        # self.__bluebots = Group()
+        # self.__redbots = Group()
         self.__Pirates = np.zeros((self.__dim[1], self.__dim[0]))
         # 0 in self.Pirates means no Pirates
         # 1 means one Pirate of red team
@@ -92,10 +92,10 @@ class Game():
         # 3 means base for team red
         # 4 means base for team blue
 
-        self.__redbase = Base(self.screen, self.redbasepos[0]*20, self.redbasepos[1]*20, 'red', self.__redbots, self.__Pirates,self)
-        self.__bluebase = Base(self.screen, self.bluebasepos[0]*20, self.bluebasepos[1]*20, 'blue', self.__bluebots, self.__Pirates,self)
-        self.__PositionToPirate[self.redbasepos] = {self.__redbase:True}
-        self.__PositionToPirate[self.bluebasepos] = {self.__bluebase:True}
+        # self.__redbase = Base(self.screen, self.redbasepos[0]*20, self.redbasepos[1]*20, 'red', self.__redbots, self.__Pirates,self)
+        # self.__bluebase = Base(self.screen, self.bluebasepos[0]*20, self.bluebasepos[1]*20, 'blue', self.__bluebots, self.__Pirates,self)
+        # self.__PositionToPirate[self.redbasepos] = {self.__redbase:True}
+        # self.__PositionToPirate[self.bluebasepos] = {self.__bluebase:True}
         self.update_score()
 
     def getPositions(self):
@@ -132,7 +132,7 @@ class Game():
                 self.game_over_iter()
                 self.check_events()
                 continue
-            self.screen.fill((60,60,60))
+            self.screen.fill((30, 207, 216))
             print(np.sum((self.__resources > 50).astype('int')))
             moves = {}
             if (rnd()>0.5):
@@ -206,14 +206,31 @@ class Game():
             
             # self.__bluebots.draw(self.screen)
             # self.__redbots.draw(self.screen)
+                    
+            
+                    
+            island_img = pygame.image.load("flag1.jpg")
+            island_rect = island_img.get_rect()
+            island_rect.center = self.flag1
+            self.screen.blit(island_img, island_rect)
 
-            self.flag1.blitme()
-            self.flag2.blitme()
-            self.flag3.blitme()
+            island_img = pygame.image.load("flag2.jpg")
+            island_rect = island_img.get_rect()
+            island_rect.center = self.flag2
+            self.screen.blit(island_img, island_rect)
 
-            self.__rum.draw(self.screen)
-            self.__gunpowder.draw(self.screen)
-            self.__wood.draw(self.screen)
+            island_img = pygame.image.load("flag3.jpg")
+            island_rect = island_img.get_rect()
+            island_rect.center = self.flag3
+            self.screen.blit(island_img, island_rect)
+
+            for i in self.__resources:
+                self.screen.blitme(i.image, i.rect) 
+
+
+            # self.__rum.draw(self.screen)
+            # self.__gunpowder.draw(self.screen)
+            # self.__wood.draw(self.screen)
 
             for b in collisions.keys():
                 self.screen.blit(self.explosion, b.rect)
@@ -360,7 +377,7 @@ class Game():
         return removals
 
 
-    def create_map(self, img_path):
+    def create_map(self):
         """Take info about __collectibles and create the map"""
         # im = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         # im = cv2.resize(im, self.__dim)
@@ -381,23 +398,22 @@ class Game():
             y = random.randint(0, self.__dim[1]-1)
             if (x, y) not in rum and (x, y) not in self.island1 and (x, y) not in self.island2 and (x, y) not in self.island3:
                 rum.append((x, y))
-                im[x][y] = 1 # rum
+                im[x][y] = -1 # rum
             
         while len(gunpowder) < frac:
             x = random.randint(0, self.__dim[0]-1)
             y = random.randint(0, self.__dim[1]-1)
             if (x, y) not in gunpowder and (x, y) not in rum and (x, y) not in self.island1 and (x, y) not in self.island2 and (x, y) not in self.island3:
                 gunpowder.append((x, y))
-                im[x][y] = 2
+                im[x][y] = -2
 
         while len(wood) < frac:
             x = random.randint(0, self.__dim[0]-1)
             y = random.randint(0, self.__dim[1]-1)
             if (x, y) not in gunpowder and (x, y) not in rum and (x, y) not in wood and (x, y) not in self.island1 and (x, y) not in self.island2 and (x, y) not in self.island3:
                 gunpowder.append((x, y))
-                im[x][y] = 3    
+                im[x][y] = -3    
 
-        
         return im, rum, gunpowder, wood
 
     def replenish(self):
@@ -502,7 +518,7 @@ class Game():
 import scriptblue
 import scriptred
 
-G = Game((40,40),(8,28),(31,28),'maps/test_img3.jpg', 'team1', 'team2')
+G = Game((40,40), 'team1', 'team2')
 G.run_game()
 
 # import pickle
