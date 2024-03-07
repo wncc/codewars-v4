@@ -1,153 +1,262 @@
-import random
-from math import floor
-def move_Pirate(ip,jp,kp,lp):
-    move_prob=str(1)*ip+str(2)*jp+str(3)*kp+str(4)*lp
-    return int(move_prob[random.choice(range(ip+jp+kp+lp))])
+# from random import randint
 
-def ActPirate(Pirate):
-    invR=[Pirate.investigate_nw()  , Pirate.investigate_up()  , Pirate.investigate_ne(), 
-          Pirate.investigate_left(),                           Pirate.investigate_right(),  
-          Pirate.investigate_se()  , Pirate.investigate_down(), Pirate.investigate_sw()]
-
-    
-    #canvas dimensions 
-    lR= Pirate.GetDimensionX()
-    bR= Pirate.GetDimensionY()
-
-    #collecting Pirate's position
-    PiratePos=Pirate.GetPosition()
-    PirateX= PiratePos[0]
-    PirateY= PiratePos[1]
-
-    #collecting Pirate's inital signal
-    iSignal=Pirate.GetInitialSignal() #R,xx:yy,A
-    temp=iSignal.split(',') 
-    baseCoordinates=temp[1].split(':') #coordinates in the form ['xx','yy']
-    Bx = int(baseCoordinates[0])
-    By = int(baseCoordinates[1])
-    aType=temp[2]
+# def moveTo(x, y, Pirate):
+#         position=Pirate.GetPosition()
+#         if position[0] == x and position[1] == y:
+#                 return 0
+#         if position[0] == x:
+#                 return (position[1]<y)*2+1
+#         if position[1] == y :
+#                 return (position[0]>x)*2+2  
+#         if randint(1,2)==1:
+#                 return (position[0]>x)*2+2
+#         else:
+#                 return (position[1]<y)*2+1
 
 
-    #attack on enemies based on Pirate investigation
-    if 'enemy-base' in invR:
-        Pirate.DeployVirus(200)              
-        #Case Pirate detects enemy base (X condition):                            
-        if invR[1]== 'enemy-base' or invR[6]== 'enemy-base' :
-            Ax = PirateX
-        if invR[2] == 'enemy-base' or invR[4] == 'enemy-base' or invR[5] == 'enemy-base':
-            Ax = PirateX+1
-        if invR[0]== 'enemy-base' or invR[3]== 'enemy-base' or invR[7] == 'enemy-base':
-            Ax = PirateX-1
-        #Case Pirate detects enemy base (Y condition):
-        if invR[5] == 'enemy-base' or invR[6] == 'enemy-base' or invR[7] == 'enemy-base':
-            Ay = PirateY+1
-        if invR[4] == 'enemy-base' or invR[3] == 'enemy-base':
-            Ay = PirateY
-        if invR[1]=='enemy-base' or invR[2] == 'enemy-base' or invR[0] == 'enemy-base':
-            Ay = PirateY-1
+# def ActPirate(pirate):
+#         # print("hell")
+#         up = pirate.investigate_up()
+#         down = pirate.investigate_down()
+#         left = pirate.investigate_left()
+#         right = pirate.investigate_right()
+#         x,y = pirate.GetPosition()
+#         pirate.setSignal('')
+#         s = pirate.trackPlayers()
+#         print(s)
+#         print(pirate.GetCurrentTeamSignal())
+#         if (up == "island1" and s[0] !="myCaptured1") or (up == "island2" and s[1] != "myCaptured2") or (up == "island3" and s[2]!="myCaptured3"):
+#                 s = up[-1] + str(x)+ ',' + str(y-1)
+#                 # print(s)
+#                 # print("herhe")
+#                 # print(pirate._Pirate__myTeam._Team__base)
+#                 pirate.SetTeamSignal(s)        
 
-        sigX=str(Ax)
-        sigY=str(Ay)
-        if len(sigX)<len(str(lR)):
-            sigX='0'*(len(str(lR))-len(sigX))+sigX
-        if len(sigY)<len(str(bR)):
-            sigY='0'*(len(str(bR))-len(sigY))+sigY
-        sendSignal=sigX+':'+sigY  
-        Pirate.setSignal('D '+sendSignal)     
+#         if (down == "island1" and s[0] !="myCaptured1") or (down == "island2" and s[1] != "myCaptured2") or (down == "island3" and s[2]!="myCaptured3"):
+#                 s = down[-1] + str(x)+ ',' + str(y+1)
+#                 # print(s)
+#                 # print("herhe")
+#                 # print("herhe")
+#                 # print(pirate._Pirate__myTeam._Team__base)
+#                 pirate.SetTeamSignal(s)
 
-        return 0
+#         if (left == "island1" and s[0] !="myCaptured1") or (left == "island2" and s[1] != "myCaptured2") or (left == "island3" and s[2]!="myCaptured3"):
+#                 s = left[-1] + str(x-1) + ','+ str(y)
+#                 # print("herhe")
+#                 # print(s)
+#                 # print("herhe")
+#                 # print(pirate._Pirate__myTeam._Team__base)
+#                 pirate.SetTeamSignal(s)
 
-    #if Pirate encounters enemy
-    if 'enemy' in invR:
-        Pirate.DeployVirus(200)
+#         if (right == "island1" and s[0] !="myCaptured1") or (right == "island2" and s[1] != "myCaptured2") or (right == "island3" and s[2]!="myCaptured3"):
+#                 s = right[-1] + str(x+1) + ',' + str(y)
+#                 # print("herhe")
+#                 # print(s)
+#                 # print("herhe")
+#                 # print(pirate._Pirate__myTeam._Team__base)
+#                 pirate.SetTeamSignal(s)
 
+#         print(pirate.GetCurrentTeamSignal())
+#         if pirate.GetCurrentTeamSignal() != "":
+#                 s = pirate.GetCurrentTeamSignal()
+#                 l = s.split(',')
+#                 x = int(l[0][1:])
+#                 y = int(l[1])
+#                 print("moveto")
+#                 return moveTo(x,y,pirate)
 
-
-    bSignal=Pirate.GetCurrentBaseSignal()
-
-    if aType=='A':
-        if bSignal != '':
-            ebaseCoordinates=bSignal.split(':') #coordinates in the form ['xx','yy']
-            EBx = int(ebaseCoordinates[0])
-            EBy = int(ebaseCoordinates[1])        
-            #Attacking enemy base!!!!
-            if (EBx-PirateX) >= 0:
-                goX=2
-            if (EBx-PirateX) < 0:
-                goX=4
-            if (EBy-PirateY) >= 0:
-                goY=3
-            if (EBy-PirateY) < 0:
-                goY=1
-            return random.choice([goX,goY])
-
-    #wall bounce
-    if PirateX == int(baseCoordinates[0]) and PirateY == int(baseCoordinates[1]):
-        Pirate.setSignal('N')
+#         else:
+#                 print("randint")
+#                 return randint(1,4)
         
-    if 'wall' in invR:
-        Pirate.setSignal('W')
-               
-    cSignal = Pirate.GetYourSignal()
+# def ActTeam(team):
+#        l = team.trackPlayers()
+#        s = team.GetYourSignal()
+
+#        if s:
+#         #       print(s)
+#                 island_no = int(s[0])
+#                 signal = l[island_no-1]
+#         #       print(signal)
+#         #       print(island_no)
+#                 if signal == "myCaptured" + str(island_no):
+#                      print("signal reset here")
+#                      team.SetYourSignal("")
+
+
+
+
+
+
+from random import randint,choice
+from pirate import Pirate
+
+# ln=0
+# rn=0
+# un=0
+# dn=0
+
+# def investigate(Pirate):
+#         return (Pirate.investigate_nw(), Pirate.investigate_up(), Pirate.investigate_ne(),
+#                 Pirate.investigate_left(), "blank", Pirate.investigate_right(),
+#                 Pirate.investigate_sw(), Pirate.investigate_down(), Pirate.investigate_se())
+
+def moveTo(x,y,Pirate):
+        position=Pirate.GetPosition()
+        if position[0] == x and position[1] == y:
+                return 0
+        if position[0] == x:
+                return (position[1]<y)*2+1
+        if position[1] == y :
+                return (position[0]>x)*2+2  
+        if randint(1,2)==1:
+                return (position[0]>x)*2+2
+        else:
+                return (position[1]<y)*2+1
+
+def moveAway(x,y,Pirate):
+        position=Pirate.GetPosition()
+        if position[0] == x and position[1] == y:
+                return randint(1,4)
+        if randint(1,2)==1:
+                return (position[0]<x)*2+2
+        else:
+                return (position[1]>y)*2+1
+
+def circleAround(x,y,radius,Pirate,initial = "abc",clockwise=True):
+        position=Pirate.GetPosition()
+        rx=position[0]
+        ry=position[1]
+        pos=[[x+i,y+radius] for i in range(-1*radius,radius+1)]
+        pos.extend([[x+radius,y+i] for i in range(radius-1,-1*radius-1,-1)])
+        pos.extend([[x+i,y-radius] for i in range(radius-1,-1*radius-1,-1)])
+        pos.extend([[x-radius,y+i] for i in range(-1*radius+1,radius)])
+        if [rx,ry] not in pos:
+                if initial != "abc":
+                        return moveTo(initial[0],initial[1],Pirate)
+                if rx in [x+i for i in range(-1*radius,radius+1)] and ry in [y+i for i in range(-1*radius,radius+1)]:
+                        return moveAway(x,y,Pirate)
+                else :
+                        return moveTo(x,y,Pirate)
+        else:
+                index=pos.index([rx,ry])
+                return moveTo(pos[(index+(clockwise*2)-1)%len(pos)][0],pos[(index+(clockwise*2)-1)%len(pos)][1],Pirate)
+
+# def ActPirate(Pirate):
+#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 1)
+#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 2)
+#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 3)
+#         return randint(1, 4)
+
+# def deployPirates():
+#         # returns a list of coordinates to deploy pirates
+#         pass
+
+# def ActTeam(Team):
+#         pass
+
+
+# def setpos(pirate, x,y, x1 ,y1,r):
+
+def radius(pirate, x,y, x1 ,y1,r):
+        pos = []
+        for i in range(x1-r, x1+r+1):
+                for j in range(y1-r, y1+r+1):
+                        pos.append((i,j))
+        t=0
+        if (x,y) in pos:
+
+
+                circleAround(x1, y1, r, pirate)
+        else:
+                return moveAway(x1, y1, pirate)
+
+
+def ActPirate(pirate):
+        up = pirate.investigate_up()
+        down = pirate.investigate_down()
+        left = pirate.investigate_left()
+        right = pirate.investigate_right()
+        x,y = pirate.GetPosition()
+        s = pirate.trackPlayers()
+        tmp1 = ""
+        tmp2 = ""
+        tmp3 = ""
+        tmp4 = ""
+        # pirate.setSignal("")
+        if (up == "island1" and s[0] !="myCaptured1") or (up == "island2" and s[1] != "myCaptured2") or (up == "island3" and s[2]!="myCaptured3"):
+                s = up[-1] + str(x)+ ',' + str(y-1)
+                tmp1 = up[-1] + str(x-2)+ ',' + str(y-1)
+                tmp2 = up[-1] + str(x+2)+ ',' + str(y-1)
+                tmp3 = up[-1] + str(x)+ ',' + str(y-3)
+                tmp4 = up[-1] + str(x)+ ',' + str(y+1)
+                
+                pirate.SetTeamSignal(s)        
+
+        if (down == "island1" and s[0] !="myCaptured1") or (down == "island2" and s[1] != "myCaptured2") or (down == "island3" and s[2]!="myCaptured3"):
+                s = down[-1] + str(x)+ ',' + str(y+1)
+                tmp1 = up[-1] + str(x-2)+ ',' + str(y+1)
+                tmp2 = up[-1] + str(x+2)+ ',' + str(y+1)
+                tmp3 = up[-1] + str(x)+ ',' + str(y-1)
+                tmp4 = up[-1] + str(x)+ ',' + str(y+3)
+                pirate.SetTeamSignal(s)
+
+        if (left == "island1" and s[0] !="myCaptured1") or (left == "island2" and s[1] != "myCaptured2") or (left == "island3" and s[2]!="myCaptured3"):
+                s = left[-1] + str(x-1) + ','+ str(y)
+                tmp1 = up[-1] + str(x-3)+ ',' + str(y-1)
+                tmp2 = up[-1] + str(x+1)+ ',' + str(y-1)
+                tmp3 = up[-1] + str(x-1)+ ',' + str(y-3)
+                tmp4 = up[-1] + str(x-1)+ ',' + str(y+1)
+                pirate.SetTeamSignal(s)
+
+        if (right == "island1" and s[0] !="myCaptured1") or (right == "island2" and s[1] != "myCaptured2") or (right == "island3" and s[2]!="myCaptured3"):
+                s = right[-1] + str(x+1) + ',' + str(y)
+                tmp1 = up[-1] + str(x-1)+ ',' + str(y-1)
+                tmp2 = up[-1] + str(x+3)+ ',' + str(y-1)
+                tmp3 = up[-1] + str(x+1)+ ',' + str(y-3)
+                tmp4 = up[-1] + str(x+1)+ ',' + str(y+1)
+                pirate.SetTeamSignal(s)
         
-    if cSignal == 'N':
-        #forward Pirate movement
-         #Coordinate System
-        Dx = (lR-1-2*Bx)/(lR-1)
-        Dy = (bR-1-2*By)/(bR-1)
-        S = 3* max(lR,bR)           
-        C1 = floor((S*abs(Dx))/(abs(Dx)+abs(Dy)))
-        C2 = floor((S*abs(Dy))/(abs(Dx)+abs(Dy)))
-        ip = floor((C2*By)/(bR-1)) + floor(S*5/6)
-        lp = floor((C1*Bx)/(lR-1)) + floor(S*5/6)
-        kp = floor((C2*(bR-1-By))/(bR-1)) + floor(S*5/6)
-        jp = floor((C1*(lR-1-Bx))/(lR-1)) + floor(S*5/6)
-    
-        return move_Pirate(ip,jp,kp,lp)
-    
-        
-    if cSignal == 'W':
-        return random.randint(1,4)
-    
-   
+        #print("fjfjf")
 
-def ActBase(base):
-    #base investigation of surroundings
-    invB=[base.investigate_nw()  , base.investigate_up()  , base.investigate_ne(), 
-          base.investigate_left(),                          base.investigate_right(),  
-          base.investigate_se()  , base.investigate_down(), base.investigate_sw()]
-    
-    #canvas dimension
-    lB= base.GetDimensionX()
-    bB= base.GetDimensionY()
+        if tmp1 != "":
+                print("not here")
+                pirate.setSignal(tmp1)
+                ln = 1
+        elif  tmp2 != "":
+                pirate.setSignal(tmp2)
+                rn = 1
+        elif tmp3 !="":
+                pirate.setSignal(tmp3)
+                un = 1
+        elif tmp4 != "":
+                pirate.setSignal(tmp4)
+                dn = 1
 
-    #position of base
-    basePos=base.GetPosition()   
-    baseX=str(basePos[0])
-    baseY=str(basePos[1])
-    if len(baseX)<len(str(lB)):
-        baseX='0'*(len(str(lB))-len(baseX))+baseX
-    if len(baseY)<len(str(bB)):
-        baseY='0'*(len(str(bB))-len(baseY))+baseY
-    
-    #inital Pirate generation
-    if base.GetElixir() > 500:
-        ttype='R'    
-        atype=random.choice(['A','V'])
-        base.create_Pirate(ttype+','+baseX+':'+baseY+','+atype) #R,xx:yy,A
-    
-    #once the Pirate sends attack signal to base:
-    for i in base.GetListOfSignals():
-        if i != '':
-            if i[0]=='D':
-                temp = i.split(' ')
-                temp = temp[1]
-                base.SetYourSignal(temp)
-                break 
+        print("herhe")
+        print(pirate.GetYourSignal())
+        if pirate.GetYourSignal() != "":
+                s2 = pirate.GetYourSignal()
+                l2 = s.split(',')
+                x2 = int(l2[0][1:])
+                y2 = int(l2[1])
+                position = pirate.GetPosition()
+                if position[0] == x2 and position[1] == y2:
+                        return 0
+                return moveTo(x2, y2, pirate)
 
-    #if base detects enemy bot
-    if  'enemy' in invB:
-        base.DeployVirus(200)
+        # elif pirate.GetCurrentTeamSignal() != "":
+        #         s = pirate.GetCurrentTeamSignal()
+        #         l = s.split(',')
+        #         x1 = int(l[0][1:])
+        #         y1 = int(l[1])
+        #         print("moveto")
+        #         return moveTo(x1,y1, pirate)
 
-               
-    return
+        else:
+                print("randint")
+                return randint(1,4)
+
+
+def ActTeam(team):
+    pass
