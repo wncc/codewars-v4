@@ -1,8 +1,9 @@
-import pygame
-from pirate import Pirate
 import random
 
-class Team():
+from .pirate import Pirate
+
+
+class Team:
     def __init__(self, screen, type, __pirate_list, __pirate_map, game, base):
         self.__pirate_list = __pirate_list
         self.__pirate_map = __pirate_map
@@ -26,24 +27,28 @@ class Team():
         for _ in range(80):
             x = random.randint(0, 39)
             y = random.randint(0, 39)
-            self.create_Pirate(base[0]*20, base[1]*20, '')
+            self.create_Pirate(base[0] * 20, base[1] * 20, "")
 
     def create_Pirate(self, x, y, signal):
         if self.__rum >= 50:
-            str = 'wncc'
-            if type(signal)!=type(str) or len(signal) > 20:
-                signal = ''
+            str = "wncc"
+            if type(signal) != type(str) or len(signal) > 20:
+                signal = ""
             self.__rum -= 50
-            
+
             pirate_i = Pirate(self.screen, x, y, self.__type, self, signal)
             self.__pirate_list.add(pirate_i)
-            
-            if (x//20, y//20) in self.__myGame._Game__PositionToPirate:
-                self.__myGame._Game__PositionToPirate[(x//20, y//20)][pirate_i] = True
+
+            if (x // 20, y // 20) in self.__myGame._Game__PositionToPirate:
+                self.__myGame._Game__PositionToPirate[(x // 20, y // 20)][
+                    pirate_i
+                ] = True
             else:
-                self.__myGame._Game__PositionToPirate[(x//20, y//20)] = {}
-                self.__myGame._Game__PositionToPirate[(x//20, y//20)][pirate_i] = True
-       
+                self.__myGame._Game__PositionToPirate[(x // 20, y // 20)] = {}
+                self.__myGame._Game__PositionToPirate[(x // 20, y // 20)][
+                    pirate_i
+                ] = True
+
     def trackPlayers(self):
         if self.__type == "red":
             return self.__myGame.island_status_red
@@ -52,60 +57,89 @@ class Team():
 
     def GetYourSignal(self):
         return self.__signal
-    
+
     def SetYourSignal(self, s):
-        str = 'wncc'
+        str = "wncc"
         print("signal reset not yet done")
-        if type(s)!=type(str) or len(s) > 20:
+        if type(s) != type(str) or len(s) > 20:
             return
         print("signal reset done")
         self.__signal = s
+
     def GetTotalRum(self):
         return self.__rum
-    
+
     def GetTotalGunpowder(self):
         return self.__gunpowder
-    
+
     def GetTotalWood(self):
         return self.__wood
-    
+
     def GetDeployPoint(self):
-        return (self.rect.x//20,self.rect.y//20)
-    
+        return (self.rect.x // 20, self.rect.y // 20)
+
     def GetDimensionX(self):
         return self.__myGame._Game__dim[0]
 
     def GetDimensionY(self):
         return self.__myGame._Game__dim[1]
-    
+
     def buildWalls(self, island1, island2, island3, island_no):
         wood = self.__wood
         if wood < 50:
             return
-        
+
         if island_no == 1:
-            if self.__type == "red" and island1.red_present and not island1.blue_present and not island1.red_wall and not island1.blue_wall and island1.rebuild_frame + 35 < self.__curr_frame:
+            if (
+                self.__type == "red"
+                and island1.red_present
+                and not island1.blue_present
+                and not island1.red_wall
+                and not island1.blue_wall
+                and island1.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island1.red_wall = True
                 if island1.red_wall_frame == -1:
                     island1.red_wall_frame = self.__curr_frame
                 self.__wood -= 50
-             
+
                 return
-            elif self.__type == "blue" and island1.blue_present and not island1.red_present and not island1.red_wall and not island1.blue_wall and island1.rebuild_frame + 35 < self.__curr_frame:
+            elif (
+                self.__type == "blue"
+                and island1.blue_present
+                and not island1.red_present
+                and not island1.red_wall
+                and not island1.blue_wall
+                and island1.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island1.blue_wall = True
                 if island1.blue_wall_frame == -1:
                     island1.blue_wall_frame = self.__curr_frame
                 self.__wood -= 50
                 return
-        
+
         elif island_no == 2:
-            if self.__type == "red" and island2.red_present and not island2.blue_present and not island2.red_wall and not island2.blue_wall and island2.rebuild_frame + 35 < self.__curr_frame:
+            if (
+                self.__type == "red"
+                and island2.red_present
+                and not island2.blue_present
+                and not island2.red_wall
+                and not island2.blue_wall
+                and island2.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island2.red_wall = True
                 if island2.red_wall_frame == -1:
                     island2.red_wall_frame = self.__curr_frame
                 self.__wood -= 50
                 return
-            elif self.__type == "blue" and island2.blue_present and not island2.red_present and not island2.red_wall and not island2.blue_wall and island2.rebuild_frame + 35 < self.__curr_frame:
+            elif (
+                self.__type == "blue"
+                and island2.blue_present
+                and not island2.red_present
+                and not island2.red_wall
+                and not island2.blue_wall
+                and island2.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island2.blue_wall = True
                 if island2.blue_wall_frame == -1:
                     island2.blue_wall_frame = self.__curr_frame
@@ -113,26 +147,40 @@ class Team():
                 return
         # elif self.__flag3 and island_no == 3:
         elif island_no == 3:
-            if self.__type == "red" and island3.red_present and not island3.blue_present and not island3.red_wall and not island3.blue_wall and island3.rebuild_frame + 35 < self.__curr_frame:
+            if (
+                self.__type == "red"
+                and island3.red_present
+                and not island3.blue_present
+                and not island3.red_wall
+                and not island3.blue_wall
+                and island3.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island3.red_wall = True
                 if island3.red_wall_frame == -1:
                     island3.red_wall_frame = self.__curr_frame
                 self.__wood -= 50
                 # print(island3.red_wall)
                 return
-            elif self.__type == "blue" and island3.blue_present and not island3.red_present and not island3.red_wall and not island3.blue_wall and island3.rebuild_frame + 35 < self.__curr_frame:
+            elif (
+                self.__type == "blue"
+                and island3.blue_present
+                and not island3.red_present
+                and not island3.red_wall
+                and not island3.blue_wall
+                and island3.rebuild_frame + 35 < self.__curr_frame
+            ):
                 island3.blue_wall = True
                 if island3.blue_wall_frame == -1:
                     island3.blue_wall_frame = self.__curr_frame
                 self.__wood -= 50
                 return
-            
+
     def addResource(self, type, x, y, frac):
-        x = x*20
-        y = y*20
-        
+        x = x * 20
+        y = y * 20
+
         if type == -1:
-            self.__rum += 100*frac
+            self.__rum += 100 * frac
             # print(len(self.__myGame._Game__rum))
             # print(len(self.__myGame._Game__rum))
 
@@ -143,14 +191,14 @@ class Team():
                     self.__myGame._Game__rum.remove(i)
                     break
         elif type == -2:
-            self.__gunpowder += 10*frac
+            self.__gunpowder += 10 * frac
             for i in self.__myGame._Game__gunpowder:
                 if i.rect == (x, y, 20, 20):
                     # print("gunpowder")
                     self.__myGame._Game__gunpowder.remove(i)
                     break
         elif type == -3:
-            self.__wood += 100*frac
+            self.__wood += 100 * frac
             for i in self.__myGame._Game__wood:
                 if i.rect == (x, y, 20, 20):
                     # print("wood")
@@ -158,11 +206,10 @@ class Team():
                     break
 
     def respawn(self):
-        for i in range(int(self.__rum//50)):
+        for i in range(int(self.__rum // 50)):
             x, y = self.__base
-            self.create_Pirate(x*20, y*20, '')
+            self.create_Pirate(x * 20, y * 20, "")
 
-        
     def GetListOfSignals(self):
         res = []
         for x in self.__pirate_list:
