@@ -9,8 +9,13 @@ from pygame.sprite import Group
 from .collectible import Collectible, Sea
 from .island import Island
 from .team import Team
+from .utils import *
 
 # random.seed(5)
+
+status_to_sea = [SEA_DARKBLUE, SEA_BLUE, SEA_RED]
+status_to_color = [BLUE, LIGHT_GRAY, RED]
+status_to_team = ["Blue", "Neutral", "Red"]
 
 
 class Game:
@@ -134,7 +139,7 @@ class Game:
             x = random.randint(0, self.__dim[0] - 1)
             y = random.randint(0, self.__dim[1] - 1)
             if (
-                (x, y) not in self.__rum
+                im[x][y] == 0
                 and (x, y) not in self.__island1.coordi
                 and (x, y) not in self.__island2.coordi
                 and (x, y) not in self.__island3.coordi
@@ -146,8 +151,7 @@ class Game:
             x = random.randint(0, self.__dim[0] - 1)
             y = random.randint(0, self.__dim[1] - 1)
             if (
-                (x, y) not in self.__gunpowder
-                and (x, y) not in self.__rum
+                im[x][y] == 0
                 and (x, y) not in self.__island1.coordi
                 and (x, y) not in self.__island2.coordi
                 and (x, y) not in self.__island3.coordi
@@ -159,9 +163,7 @@ class Game:
             x = random.randint(0, self.__dim[0] - 1)
             y = random.randint(0, self.__dim[1] - 1)
             if (
-                (x, y) not in self.__gunpowder
-                and (x, y) not in self.__rum
-                and (x, y) not in self.__wood
+                im[x][y] == 0
                 and (x, y) not in self.__island1.coordi
                 and (x, y) not in self.__island2.coordi
                 and (x, y) not in self.__island3.coordi
@@ -175,13 +177,13 @@ class Game:
         iter = 0
         while True:
             iter += 1
-            if iter <= 1000:
+            if iter <= 3000:
 
                 self.__red_team.buildWalls(
                     self.__island1, self.__island2, self.__island3, 1
                 )
 
-                self.screen.fill((30, 207, 216))
+                self.screen.fill(SEA_BLUE)
                 moves = {}
 
                 status1 = self.__island1.check(iter)
@@ -248,19 +250,30 @@ class Game:
                 self.__red_team._Team__curr_frame = iter
                 self.__blue_team._Team__curr_frame = iter
 
-                island_img = pygame.image.load("images/flag1.jpg")
+                self.__sea.draw(self.screen)
+
+                island_img = pygame.image.load("images/flag1.png")
                 island_rect = island_img.get_rect()
                 island_rect.center = (self.flag1[0] * 20 + 10, self.flag1[1] * 20 + 10)
+                pygame.draw.rect(
+                    self.screen, status_to_sea[self.status1 + 1], island_rect
+                )
                 self.screen.blit(island_img, island_rect)
 
-                island_img = pygame.image.load("images/flag2.jpg")
+                island_img = pygame.image.load("images/flag2.png")
                 island_rect = island_img.get_rect()
                 island_rect.center = (self.flag2[0] * 20 + 10, self.flag2[1] * 20 + 10)
+                pygame.draw.rect(
+                    self.screen, status_to_sea[self.status2 + 1], island_rect
+                )
                 self.screen.blit(island_img, island_rect)
 
-                island_img = pygame.image.load("images/flag3.jpg")
+                island_img = pygame.image.load("images/flag3.png")
                 island_rect = island_img.get_rect()
                 island_rect.center = (self.flag3[0] * 20 + 10, self.flag3[1] * 20 + 10)
+                pygame.draw.rect(
+                    self.screen, status_to_sea[self.status3 + 1], island_rect
+                )
                 self.screen.blit(island_img, island_rect)
 
                 self.__island1.checkwall(iter)
@@ -276,14 +289,14 @@ class Game:
                             n = self.__rscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            print("Redbot error")
+                            # print("Redbot error")
                         moves[pirate_i] = n
                     for pirate_i in self.__blue_pirates:
                         try:
                             n = self.__bscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            print("Blubot error")
+                            # print("Blubot error")
                         moves[pirate_i] = n
 
                 else:
@@ -292,7 +305,7 @@ class Game:
                             n = self.__bscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            print("Blue bot error")
+                            # print("Blue bot error")
                         moves[pirate_i] = n
 
                     for pirate_i in self.__red_pirates:
@@ -300,7 +313,7 @@ class Game:
                             n = self.__rscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            print("Redbot error")
+                            # print("Redbot error")
                         moves[pirate_i] = n
 
                 for pirate_i, n in moves.items():
@@ -320,7 +333,7 @@ class Game:
                         )
 
                 self.check_collisions()
-                print(self.flag1, self.flag2, self.flag3)
+                # print(self.flag1, self.flag2, self.flag3)
                 self.__rum.draw(self.screen)
                 self.__gunpowder.draw(self.screen)
                 self.__wood.draw(self.screen)
@@ -334,8 +347,8 @@ class Game:
                 self.update_score()
                 self.collect()
 
-                # print(self.island_status_blue)
-                # print(self.island_status_red)
+                # # print(self.island_status_blue)
+                # # print(self.island_status_red)
 
                 if iter % 10 == 0:
                     self.replenish()
@@ -460,25 +473,26 @@ class Game:
 
         for a in to_kill:
             del self.__PositionToPirate[(a.rect.x // 20, a.rect.y // 20)][a]
+            a._Pirate__on_death((self.__island1, self.__island2, self.__island3))
             a.kill()
         return removals
 
     def buttons(self):
         button_font = pygame.font.SysFont(None, 36)
-        slow_down = button_font.render("Slower", True, (230, 230, 230))
+        slow_down = button_font.render("Slower", True, LIGHT_GRAY)
         self.slow_rect = slow_down.get_rect()
         self.slow_rect.center = ((self.__dim[0]) * 20 + 60, self.__dim[1] * 18 + 5)
         self.slow_rect.width += 20
         self.slow_rect.height += 20
-        pygame.draw.rect(self.screen, (20, 20, 20), self.slow_rect)
+        pygame.draw.rect(self.screen, DARK_GREY, self.slow_rect)
         self.screen.blit(slow_down, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 18))
 
-        speed_up = button_font.render("Faster", True, (230, 230, 230))
+        speed_up = button_font.render("Faster", True, LIGHT_GRAY)
         self.fast_rect = speed_up.get_rect()
         self.fast_rect.center = ((self.__dim[0]) * 20 + 258, self.__dim[1] * 18 + 5)
         self.fast_rect.width += 20
         self.fast_rect.height += 20
-        pygame.draw.rect(self.screen, (20, 20, 20), self.fast_rect)
+        pygame.draw.rect(self.screen, DARK_GREY, self.fast_rect)
         self.screen.blit(speed_up, ((self.__dim[0]) * 20 + 230, self.__dim[1] * 18))
 
     def check_events(self):
@@ -517,9 +531,7 @@ class Game:
                         x = random.randint(0, self.__dim[0] - 1)
                         y = random.randint(0, self.__dim[1] - 1)
                         if (
-                            (x, y) not in self.__gunpowder
-                            and (x, y) not in self.__rum
-                            and (x, y) not in self.__wood
+                            self.__collectibles[x][y] == 0
                             and (x, y) not in self.__island1.coordi
                             and (x, y) not in self.__island2.coordi
                             and (x, y) not in self.__island3.coordi
@@ -531,126 +543,170 @@ class Game:
     def update_score(self):
         """Update scores in the scoreboard"""
         title_font = pygame.font.SysFont(None, 48)
-        title = title_font.render("Score Board", True, (255, 255, 255))
+        title = title_font.render("Score Board", True, WHITE)
         titlerect = title.get_rect()
         titlerect.x = self.__dim[0] * 20 + 100
         titlerect.y = 40
         self.screen.blit(title, titlerect)
         head_font = pygame.font.SysFont(None, 40)
         norm_font = pygame.font.SysFont(None, 32)
-        blue_head = head_font.render("BLUE", False, (130, 130, 255))
+        blue_head = head_font.render("BLUE", False, BLUE)
         self.screen.blit(blue_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 2.5))
         blue_total = norm_font.render(
             "Total rum :" + str(round(self.__blue_team._Team__rum, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
-        self.screen.blit(blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5))
+        self.screen.blit(blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5))
         blue_total = norm_font.render(
             "Total gunpowder :" + str(round(self.__blue_team._Team__gunpowder, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
         self.screen.blit(
-            blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 20)
+            blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 20)
         )
         blue_total = norm_font.render(
             "Total wood :" + str(round(self.__blue_team._Team__wood, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
         self.screen.blit(
-            blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 40)
+            blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 40)
         )
         blue_flag1coordi = norm_font.render(
-            "Flag 1 : " + str(self.__blue_team._Team__flag1), False, (230, 230, 230)
+            "Flag 1 : " + str(self.__blue_team._Team__flag1), False, LIGHT_GRAY
         )
         self.screen.blit(
-            blue_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 80)
+            blue_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 80)
         )
         blue_flag2coordi = norm_font.render(
-            "Flag 2 : " + str(self.__blue_team._Team__flag2), False, (230, 230, 230)
+            "Flag 2 : " + str(self.__blue_team._Team__flag2), False, LIGHT_GRAY
         )
         self.screen.blit(
-            blue_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 100)
+            blue_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 100)
         )
         blue_flag3coordi = norm_font.render(
-            "Flag 3 : " + str(self.__blue_team._Team__flag3), False, (230, 230, 230)
+            "Flag 3 : " + str(self.__blue_team._Team__flag3), False, LIGHT_GRAY
         )
         self.screen.blit(
-            blue_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 120)
+            blue_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 120)
         )
         blue_Pirates = norm_font.render(
-            "No. of Pirates: " + str(len(self.__blue_pirates)), False, (230, 230, 230)
+            "No. of Pirates: " + str(len(self.__blue_pirates)), False, LIGHT_GRAY
         )
         self.screen.blit(
-            blue_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 5 + 60)
+            blue_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 60)
         )
         red_flag1coordi = norm_font.render(
-            "Flag 1 : " + str(self.__red_team._Team__flag1), False, (230, 230, 230)
+            "Flag 1 : " + str(self.__red_team._Team__flag1), False, LIGHT_GRAY
         )
         self.screen.blit(
-            red_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 80)
+            red_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 80)
         )
         red_flag2coordi = norm_font.render(
-            "Flag 2 : " + str(self.__red_team._Team__flag2), False, (230, 230, 230)
+            "Flag 2 : " + str(self.__red_team._Team__flag2), False, LIGHT_GRAY
         )
         self.screen.blit(
-            red_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 100)
+            red_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 100)
         )
         red_flag3coordi = norm_font.render(
-            "Flag 3 : " + str(self.__red_team._Team__flag3), False, (230, 230, 230)
+            "Flag 3 : " + str(self.__red_team._Team__flag3), False, LIGHT_GRAY
         )
         self.screen.blit(
-            red_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 120)
+            red_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 120)
         )
 
-        red_head = head_font.render("RED", False, (255, 130, 130))
-        self.screen.blit(red_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 10))
+        red_head = head_font.render("RED", False, RED)
+        self.screen.blit(red_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 8))
         red_total = norm_font.render(
             "Total rum :" + str(round(self.__red_team._Team__rum, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
-        self.screen.blit(red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12))
+        self.screen.blit(red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9))
         red_total = norm_font.render(
             "Total gunpowder :" + str(round(self.__red_team._Team__gunpowder, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
         self.screen.blit(
-            red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 20)
+            red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 20)
         )
 
         red_total = norm_font.render(
             "Total wood :" + str(round(self.__red_team._Team__wood, 2)),
             False,
-            (230, 230, 230),
+            LIGHT_GRAY,
         )
         self.screen.blit(
-            red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 40)
+            red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 40)
         )
 
         red_Pirates = norm_font.render(
-            "No. of Pirates: " + str(len(self.__red_pirates)), False, (230, 230, 230)
+            "No. of Pirates: " + str(len(self.__red_pirates)), False, LIGHT_GRAY
         )
         self.screen.blit(
-            red_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 60)
+            red_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 60)
         )
 
-        stat1 = head_font.render("Island 1", False, (255, 130, 130))
-        s1 = head_font.render(str(self.status1), False, (255, 130, 130))
-        self.screen.blit(s1, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 12 + 140))
-        s2 = head_font.render(str(self.status2), False, (255, 130, 130))
-        self.screen.blit(s2, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 12 + 160))
-        s3 = head_font.render(str(self.status3), False, (255, 130, 130))
-        self.screen.blit(s3, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 12 + 180))
+        # s1 = head_font.render(str(self.status1), False, RED)
+        # self.screen.blit(s1, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 140))
+        # s2 = head_font.render(str(self.status2), False, RED)
+        # self.screen.blit(s2, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 160))
+        # s3 = head_font.render(str(self.status3), False, RED)
+        # self.screen.blit(s3, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 180))
 
-        self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 140))
-        stat2 = head_font.render("Island 2", False, (255, 130, 130))
-        self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 160))
-        stat3 = head_font.render("Island 3", False, (255, 130, 130))
-        self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 12 + 180))
+        # stat1 = head_font.render("Island 1", False, LIGHT_GRAY)
+        # self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 140))
+        # stat2 = head_font.render("Island 2", False, LIGHT_GRAY)
+        # self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 160))
+        # stat3 = head_font.render("Island 3", False, LIGHT_GRAY)
+        # self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 180))
+
+        s1 = head_font.render(
+            status_to_team[self.status1 + 1], False, status_to_color[self.status1 + 1]
+        )
+        self.screen.blit(s1, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 140))
+        s2 = head_font.render(
+            status_to_team[self.status2 + 1], False, status_to_color[self.status2 + 1]
+        )
+        self.screen.blit(s2, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 165))
+        s3 = head_font.render(
+            status_to_team[self.status3 + 1], False, status_to_color[self.status3 + 1]
+        )
+        self.screen.blit(s3, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 190))
+
+        if self.__island1.progress():
+            s1 = head_font.render(
+                self.__island1.progress(),
+                False,
+                RED if self.__island1.capturing_team == 1 else BLUE,
+            )
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 140))
+
+        if self.__island2.progress():
+            s1 = head_font.render(
+                self.__island2.progress(),
+                False,
+                RED if self.__island2.capturing_team == 1 else BLUE,
+            )
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 165))
+
+        if self.__island3.progress():
+            s1 = head_font.render(
+                self.__island3.progress(),
+                False,
+                RED if self.__island3.capturing_team == 1 else BLUE,
+            )
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 190))
+
+        stat1 = head_font.render("Island 1:", False, LIGHT_GRAY)
+        self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 140))
+        stat2 = head_font.render("Island 2:", False, LIGHT_GRAY)
+        self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 165))
+        stat3 = head_font.render("Island 3:", False, LIGHT_GRAY)
+        self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 190))
 
     def updatePirateMap(self):
         for i in range(0, self.__dim[0]):
@@ -697,7 +753,7 @@ class Game:
                 self.__blue_team.addResource(val, key[0], key[1], blue / (red + blue))
 
     def game_over(self):
-        # print(":(")
+        # # print(":(")
         if self.status1 == self.status2 == self.status3 == 1:
             self.winner("red")
             return "red"
@@ -709,13 +765,13 @@ class Game:
 
     def winner(self, team):
         """Check conditions of game over"""
-        print("hi")
+        # print("hi")
         game_over_font = pygame.font.SysFont(None, 48)
 
         if team == "blue":
-            print("Blue Wins")
+            # print("Blue Wins")
             game_over = game_over_font.render(
-                self.bname + " Wins", True, (100, 100, 255), (230, 230, 230)
+                self.bname + " Wins", True, BLUE, LIGHT_GRAY
             )
             self.screen.blit(game_over, ((self.__dim[0]) * 10, (self.__dim[0]) * 10))
 
@@ -725,9 +781,9 @@ class Game:
                 self.check_events()
 
         elif team == "red":
-            print("Red Wins")
+            # print("Red Wins")
             game_over = game_over_font.render(
-                self.rname + " Wins", True, (255, 100, 100), (230, 230, 230)
+                self.rname + " Wins", True, RED, LIGHT_GRAY
             )
             self.screen.blit(game_over, ((self.__dim[0]) * 10, (self.__dim[0]) * 10))
             pygame.display.flip()
@@ -737,7 +793,7 @@ class Game:
                 self.check_events()
 
     def time_up(self):
-        print("time")
+        # print("time")
         nr = 0
         nb = 0
         for i in [self.status1, self.status2, self.status3]:

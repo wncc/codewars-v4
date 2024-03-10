@@ -60,10 +60,10 @@ class Team:
 
     def SetYourSignal(self, s):
         str = "wncc"
-        print("signal reset not yet done")
+        # print("signal reset not yet done")
         if type(s) != type(str) or len(s) > 20:
             return
-        print("signal reset done")
+        # print("signal reset done")
         self.__signal = s
 
     def GetTotalRum(self):
@@ -159,7 +159,7 @@ class Team:
                 if island3.red_wall_frame == -1:
                     island3.red_wall_frame = self.__curr_frame
                 self.__wood -= 50
-                # print(island3.red_wall)
+                # # print(island3.red_wall)
                 return
             elif (
                 self.__type == "blue"
@@ -181,12 +181,12 @@ class Team:
 
         if type == -1:
             self.__rum += 100 * frac
-            # print(len(self.__myGame._Game__rum))
-            # print(len(self.__myGame._Game__rum))
+            # # print(len(self.__myGame._Game__rum))
+            # # print(len(self.__myGame._Game__rum))
 
             for i in self.__myGame._Game__rum:
                 if i.rect == (x, y, 20, 20):
-                    # print(len(self.__myGame._Game__rum))
+                    # # print(len(self.__myGame._Game__rum))
 
                     self.__myGame._Game__rum.remove(i)
                     break
@@ -194,14 +194,14 @@ class Team:
             self.__gunpowder += 10 * frac
             for i in self.__myGame._Game__gunpowder:
                 if i.rect == (x, y, 20, 20):
-                    # print("gunpowder")
+                    # # print("gunpowder")
                     self.__myGame._Game__gunpowder.remove(i)
                     break
         elif type == -3:
             self.__wood += 100 * frac
             for i in self.__myGame._Game__wood:
                 if i.rect == (x, y, 20, 20):
-                    # print("wood")
+                    # # print("wood")
                     self.__myGame._Game__wood.remove(i)
                     break
 

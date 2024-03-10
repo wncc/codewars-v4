@@ -2,6 +2,8 @@ from pygame.sprite import Group, Sprite
 
 from .collectible import Wall
 
+FRAMES_TO_CAPTURE = 150
+
 
 class Island(Sprite):
     def __init__(self, screen, number, game, flag, pirate_map):
@@ -9,6 +11,7 @@ class Island(Sprite):
         self.screen = screen
         self.coordi = []
         self.__flag = flag
+        self.__progress = -1
         self.__red_found = False
         self.__blue_found = False
         self.__pirate_map = pirate_map
@@ -41,33 +44,45 @@ class Island(Sprite):
         # 1 - captured by red
         # -1 - captured by blue
 
+    def progress(self):
+        if self.start_capture == -1 or self.capturing_team == None:
+            return None
+        return f"{self.__progress}/{FRAMES_TO_CAPTURE}"
+
+    def __reset(self):
+        self.start_capture = -1
+        self.__progress = -1
+        self.capturing_team = None
+
     def check(self, frame):
-        # red enters and blue is not present
-        if (
-            self.red_present
-            and not self.blue_present
-            and self.start_capture == -1
-            and self.__status != 1
-        ):
-            self.start_capture = frame
-            self.capturing_team = 1
-        # blue enters and red is not present
-        elif (
-            self.blue_present
-            and not self.red_present
-            and self.start_capture == -1
-            and self.__status != -1
-        ):
-            self.start_capture = frame
-            self.capturing_team = 2
         # both are present
-        elif self.red_present and self.blue_present:
-            self.start_capture = -1
-            self.capturing_team = None
+        if self.red_present and self.blue_present:
+            self.__reset()
         # no capturing team
         elif not self.red_present and not self.blue_present:
-            self.start_capture = -1
-            self.capturing_team = None
+            self.__reset()
+
+        # red enters and blue is not present
+        elif self.red_present and not self.blue_present and self.__status != 1:
+            if self.start_capture == -1:
+                self.start_capture = frame
+                self.capturing_team = 1
+
+            self.__progress = frame - self.start_capture
+            if self.__progress >= FRAMES_TO_CAPTURE:
+                self.__status = 1
+                self.__reset()
+        # blue enters and red is not present
+        elif self.blue_present and not self.red_present and self.__status != -1:
+            if self.start_capture == -1:
+                self.start_capture = frame
+                self.capturing_team = 2
+
+            self.__progress = frame - self.start_capture
+            if self.__progress >= FRAMES_TO_CAPTURE:
+                self.__status = -1
+                self.__reset()
+
         # # blue was capturing, left and not red is capturing
         # elif self.red_present and not self.blue_present and self.start_capture != -1 and self.capturing_team == 2:
         #     self.start_capture = -1
@@ -83,27 +98,29 @@ class Island(Sprite):
         #     else:
         #         self.capturing_team = None
         # red captured
-        if (
-            self.red_present
-            and not self.blue_present
-            and self.start_capture != -1
-            and self.capturing_team == 1
-        ):
-            if frame - self.start_capture >= 150:
-                self.__status = 1
-                self.start_capture = -1
-                self.capturing_team = None
+
+        # if (
+        #     self.red_present
+        #     and not self.blue_present
+        #     and self.start_capture != -1
+        #     and self.capturing_team == 1
+        # ):
+        #     if self.__progress >= FRAMES_TO_CAPTURE:
+        #         self.__status = 1
+        #         self.start_capture = -1
+        #         self.capturing_team = None
         # blue captured
-        elif (
-            self.blue_present
-            and not self.red_present
-            and self.start_capture != -1
-            and self.capturing_team == 2
-        ):
-            if frame - self.start_capture >= 150:
-                self.__status = -1
-                self.start_capture = -1
-                self.capturing_team = None
+        # elif (
+        #     self.blue_present
+        #     and not self.red_present
+        #     and self.start_capture != -1
+        #     and self.capturing_team == 2
+        # ):
+        #     self.__progress = frame - self.start_capture
+        #     if self.__progress >= FRAMES_TO_CAPTURE:
+        #         self.__status = -1
+        #         self.start_capture = -1
+        #         self.capturing_team = None
         return self.__status
 
     def checkwall(self, frame):
@@ -121,6 +138,6 @@ class Island(Sprite):
                 self.blue_wall_frame = -1
 
         if self.red_wall or self.blue_wall:
-            # print("HI")
-            # print(self.walls)
+            # # print("HI")
+            # # print(self.walls)
             self.walls.draw(self.screen)
