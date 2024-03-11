@@ -84,7 +84,7 @@ class Team:
     def GetDimensionY(self):
         return self.__myGame._Game__dim[1]
 
-    def buildWalls(self, island1, island2, island3, island_no):
+    def __buildWalls(self, island1, island2, island3, island_no):
         wood = self.__wood
         if wood < 50:
             return
@@ -174,6 +174,9 @@ class Team:
                     island3.blue_wall_frame = self.__curr_frame
                 self.__wood -= 50
                 return
+            
+    def buildWalls(self, island_no):
+        return self.__buildWalls(self.__myGame._Game__island1, self.__myGame._Game__island2, self.__myGame._Game__island3, island_no)
 
     def addResource(self, type, x, y, frac):
         x = x * 20

@@ -77,6 +77,10 @@ def ActTeam(team):
     l = team.trackPlayers()
     s = team.GetYourSignal()
 
+    team.buildWalls(1)
+    team.buildWalls(2)
+    team.buildWalls(3)
+
     if s:
         island_no = int(s[0])
         signal = l[island_no - 1]

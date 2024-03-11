@@ -179,9 +179,13 @@ class Game:
             iter += 1
             if iter <= 3000:
 
-                self.__red_team.buildWalls(
-                    self.__island1, self.__island2, self.__island3, 1
-                )
+                # self.__red_team.buildWalls(
+                #     self.__island1, self.__island2, self.__island3, 1
+                # )
+
+                # self.__blue_team.buildWalls(
+                #     self.__island1, self.__island2, self.__island3, 2
+                # )
 
                 self.screen.fill(SEA_BLUE)
                 moves = {}
