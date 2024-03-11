@@ -87,7 +87,7 @@ class Game:
 
     @property
     def rname(self):
-        return self.__rsript.name
+        return self.__rscript.name
 
     @property
     def bname(self):
@@ -190,50 +190,59 @@ class Game:
                 status2 = self.__island2.check(iter)
                 status3 = self.__island3.check(iter)
 
+                if status1 == 1:
+                    self.island_status_red[0] = "myCaptured"
+                    self.island_status_blue[3] = "oppCaptured"
+                    self.island_status_red[3] = ""
+                    self.island_status_blue[0] = ""
+                elif status1 == -1:
+                    self.island_status_red[3] = "oppCaptured"
+                    self.island_status_blue[0] = "myCaptured"
+                    self.island_status_red[0] = ""
+                    self.island_status_blue[3] = ""
+                if status2 == 1:
+                    self.island_status_red[1] = "myCaptured"
+                    self.island_status_blue[4] = "oppCaptured"
+                    self.island_status_red[4] = ""
+                    self.island_status_blue[1] = ""
+                elif status2 == -1:
+                    self.island_status_red[4] = "oppCaptured"
+                    self.island_status_blue[1] = "myCaptured"
+                    self.island_status_red[1] = ""
+                    self.island_status_blue[4] = ""
+                if status3 == 1:
+                    self.island_status_red[2] = "myCaptured"
+                    self.island_status_blue[5] = "oppCaptured"
+                    self.island_status_red[5] = ""
+                    self.island_status_blue[2] = ""
+                elif status3 == -1:
+                    self.island_status_red[5] = "oppCaptured"
+                    self.island_status_blue[2] = "myCaptured"
+                    self.island_status_red[2] = ""
+                    self.island_status_blue[5] = ""
+
                 if self.__island1.capturing_team == 1:  # red
-                    self.island_status_red[0] = "myCapturing1"
-                    self.island_status_blue[3] = "oppCapturing1"
+                    self.island_status_red[0] = "myCapturing"
+                    self.island_status_blue[3] = "oppCapturing"
                 elif self.__island1.capturing_team == 2:  # blue
 
-                    self.island_status_red[3] = "oppCapturing1"
-                    self.island_status_blue[0] = "myCapturing1"
+                    self.island_status_red[3] = "oppCapturing"
+                    self.island_status_blue[0] = "myCapturing"
                 if self.__island2.capturing_team == 1:  # red
 
-                    self.island_status_red[1] = "myCapturing2"
-                    self.island_status_blue[4] = "oppCapturing2"
+                    self.island_status_red[1] = "myCapturing"
+                    self.island_status_blue[4] = "oppCapturing"
                 elif self.__island2.capturing_team == 2:  # blue
-                    self.island_status_red[4] = "oppCapturing2"
-                    self.island_status_blue[1] = "myCapturing2"
+                    self.island_status_red[4] = "oppCapturing"
+                    self.island_status_blue[1] = "myCapturing"
 
                 if self.__island3.capturing_team == 1:  # red
-                    self.island_status_red[2] = "myCapturing3"
-                    self.island_status_blue[5] = "oppCapturing3"
+                    self.island_status_red[2] = "myCapturing"
+                    self.island_status_blue[5] = "oppCapturing"
 
                 elif self.__island3.capturing_team == 2:  # blue
-                    self.island_status_red[5] = "oppCapturing3"
-                    self.island_status_blue[2] = "myCapturing3"
-
-                if status1 == 1:
-                    self.island_status_red[0] = "myCaptured1"
-                    self.island_status_blue[3] = "oppCaptured1"
-                elif status1 == -1:
-                    self.island_status_red[3] = "oppCaptured1"
-                    self.island_status_blue[0] = "myCaptured1"
-                if status2 == 1:
-                    self.island_status_red[1] = "myCaptured2"
-                    self.island_status_blue[4] = "oppCaptured2"
-                elif status2 == -1:
-                    # self.captured[4] = 1
-                    self.island_status_red[4] = "oppCaptured2"
-                    self.island_status_blue[1] = "myCaptured2"
-                if status3 == 1:
-                    # self.captured[2] = 1
-                    self.island_status_red[2] = "myCaptured3"
-                    self.island_status_blue[5] = "oppCaptured3"
-                elif status3 == -1:
-                    # self.captured[5] = 1
-                    self.island_status_red[5] = "oppCaptured3"
-                    self.island_status_blue[2] = "myCaptured3"
+                    self.island_status_red[5] = "oppCapturing"
+                    self.island_status_blue[2] = "myCapturing"
 
                 self.__red_team.status1 = status1
                 self.__red_team.status2 = status2
@@ -550,7 +559,7 @@ class Game:
         self.screen.blit(title, titlerect)
         head_font = pygame.font.SysFont(None, 40)
         norm_font = pygame.font.SysFont(None, 32)
-        blue_head = head_font.render("BLUE", False, BLUE)
+        blue_head = head_font.render(self.bname, False, BLUE)
         self.screen.blit(blue_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 2.5))
         blue_total = norm_font.render(
             "Total rum :" + str(round(self.__blue_team._Team__rum, 2)),
@@ -617,7 +626,7 @@ class Game:
             red_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 120)
         )
 
-        red_head = head_font.render("RED", False, RED)
+        red_head = head_font.render(self.rname, False, RED)
         self.screen.blit(red_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 8))
         red_total = norm_font.render(
             "Total rum :" + str(round(self.__red_team._Team__rum, 2)),

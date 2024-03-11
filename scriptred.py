@@ -25,14 +25,14 @@
 #         s = pirate.trackPlayers()
 #         # print(s)
 #         # print(pirate.GetCurrentTeamSignal())
-#         if (up == "island1" and s[0] !="myCaptured1") or (up == "island2" and s[1] != "myCaptured2") or (up == "island3" and s[2]!="myCaptured3"):
+#         if (up == "island1" and s[0] !="myCaptured") or (up == "island2" and s[1] != "myCaptured") or (up == "island3" and s[2]!="myCaptured"):
 #                 s = up[-1] + str(x)+ ',' + str(y-1)
 #                 # # print(s)
 #                 # # print("herhe")
 #                 # # print(pirate._Pirate__myTeam._Team__base)
 #                 pirate.SetTeamSignal(s)
 
-#         if (down == "island1" and s[0] !="myCaptured1") or (down == "island2" and s[1] != "myCaptured2") or (down == "island3" and s[2]!="myCaptured3"):
+#         if (down == "island1" and s[0] !="myCaptured") or (down == "island2" and s[1] != "myCaptured") or (down == "island3" and s[2]!="myCaptured"):
 #                 s = down[-1] + str(x)+ ',' + str(y+1)
 #                 # # print(s)
 #                 # # print("herhe")
@@ -40,7 +40,7 @@
 #                 # # print(pirate._Pirate__myTeam._Team__base)
 #                 pirate.SetTeamSignal(s)
 
-#         if (left == "island1" and s[0] !="myCaptured1") or (left == "island2" and s[1] != "myCaptured2") or (left == "island3" and s[2]!="myCaptured3"):
+#         if (left == "island1" and s[0] !="myCaptured") or (left == "island2" and s[1] != "myCaptured") or (left == "island3" and s[2]!="myCaptured"):
 #                 s = left[-1] + str(x-1) + ','+ str(y)
 #                 # # print("herhe")
 #                 # # print(s)
@@ -48,7 +48,7 @@
 #                 # # print(pirate._Pirate__myTeam._Team__base)
 #                 pirate.SetTeamSignal(s)
 
-#         if (right == "island1" and s[0] !="myCaptured1") or (right == "island2" and s[1] != "myCaptured2") or (right == "island3" and s[2]!="myCaptured3"):
+#         if (right == "island1" and s[0] !="myCaptured") or (right == "island2" and s[1] != "myCaptured") or (right == "island3" and s[2]!="myCaptured"):
 #                 s = right[-1] + str(x+1) + ',' + str(y)
 #                 # # print("herhe")
 #                 # # print(s)
@@ -191,9 +191,9 @@ def ActPirate(pirate):
     tmp4 = ""
     # pirate.setSignal("")
     if (
-        (up == "island1" and s[0] != "myCaptured1")
-        or (up == "island2" and s[1] != "myCaptured2")
-        or (up == "island3" and s[2] != "myCaptured3")
+        (up == "island1" and s[0] != "myCaptured")
+        or (up == "island2" and s[1] != "myCaptured")
+        or (up == "island3" and s[2] != "myCaptured")
     ):
         s = up[-1] + str(x) + "," + str(y - 1)
         tmp1 = up[-1] + str(x - 2) + "," + str(y - 1)
@@ -204,9 +204,9 @@ def ActPirate(pirate):
         pirate.SetTeamSignal(s)
 
     if (
-        (down == "island1" and s[0] != "myCaptured1")
-        or (down == "island2" and s[1] != "myCaptured2")
-        or (down == "island3" and s[2] != "myCaptured3")
+        (down == "island1" and s[0] != "myCaptured")
+        or (down == "island2" and s[1] != "myCaptured")
+        or (down == "island3" and s[2] != "myCaptured")
     ):
         s = down[-1] + str(x) + "," + str(y + 1)
         tmp1 = up[-1] + str(x - 2) + "," + str(y + 1)
@@ -216,9 +216,9 @@ def ActPirate(pirate):
         pirate.SetTeamSignal(s)
 
     if (
-        (left == "island1" and s[0] != "myCaptured1")
-        or (left == "island2" and s[1] != "myCaptured2")
-        or (left == "island3" and s[2] != "myCaptured3")
+        (left == "island1" and s[0] != "myCaptured")
+        or (left == "island2" and s[1] != "myCaptured")
+        or (left == "island3" and s[2] != "myCaptured")
     ):
         s = left[-1] + str(x - 1) + "," + str(y)
         tmp1 = up[-1] + str(x - 3) + "," + str(y - 1)
@@ -228,9 +228,9 @@ def ActPirate(pirate):
         pirate.SetTeamSignal(s)
 
     if (
-        (right == "island1" and s[0] != "myCaptured1")
-        or (right == "island2" and s[1] != "myCaptured2")
-        or (right == "island3" and s[2] != "myCaptured3")
+        (right == "island1" and s[0] != "myCaptured")
+        or (right == "island2" and s[1] != "myCaptured")
+        or (right == "island3" and s[2] != "myCaptured")
     ):
         s = right[-1] + str(x + 1) + "," + str(y)
         tmp1 = up[-1] + str(x - 1) + "," + str(y - 1)

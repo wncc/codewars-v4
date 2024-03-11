@@ -225,21 +225,6 @@ class Pirate(Sprite):
             return "wall"
         return self.__investigate(self.rect.x // 20 - 1, self.rect.y // 20 + 1)
 
-    def setSignal(self, sig):
-        str = "wncc"
-        if type(sig) != type(str) or len(sig) > 20:
-            return
-        self.__Signal = sig
-
-    def GetInitialSignal(self):
-        return self.__initialSignal
-
-    def GetYourSignal(self):
-        return self.__signal
-
-    def GetCurrentTeamSignal(self):
-        return self.__myTeam._Team__signal
-
     def GetTotalRum(self):
         return self.__myTeam._Team__rum
 
@@ -262,7 +247,7 @@ class Pirate(Sprite):
         str = "wncc"
         if type(sig) != type(str) or len(sig) > 20:
             return
-        self.__Signal = sig
+        self.__signal = sig
 
     def GetInitialSignal(self):
         return self.__initialSignal
