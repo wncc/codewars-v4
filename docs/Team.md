@@ -23,13 +23,13 @@ The cooldown is of `X` frames between the last wall breaking and the next wall b
 
 ## Signalling
 
-### `GetYourSignal() -> str`
+### `getTeamSignal() -> str`
 Returns the current signal of the team.
 
-### `setYourSignal(sig)`
+### `setTeamSignal(sig)`
 Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
 
-### `GetListOfSignals() -> str[]`
+### `getListOfSignals() -> str[]`
 Returns a list containing the signals of all the pirates in the team.
 This list is **read-only**, changing signals in the array will not change it for the pirate.
 
@@ -51,20 +51,26 @@ team.trackPlayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
 team.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
 ```
 
-### `GetTotalRum()`
+### `getTotalRum()`
 Returns the total amount of rum the team has.
 
-### `GetTotalGunpowder()`
+### `getTotalGunpowder()`
 Returns the total amount of gunpowder the team has.
 
-### `GetTotalWood()`
+### `getTotalWood()`
 Returns the total amount of wood the team has.
 
-### `GetDeployPoint()`
+### `getDeployPoint()`
 Returns the position at which the team spawns pirates as a tuple `(x, y)`. 
 
-### `GetDimensionX()`
+### `getDimensionX()`
 Returns the X dimension of the game.
 
-### `GetDimensionY()`
+### `getDimensionY()`
 Returns the Y dimension of the game.
+
+### `buildWalls(island_no)`
+Builds walls around the specified island. Does nothing if the team does not have enough wood to build walls.
+
+### `getCurrentFrame()`
+Returns the current time frame of the game

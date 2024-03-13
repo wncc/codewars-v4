@@ -11,7 +11,7 @@ from .island import Island
 from .team import Team
 from .utils import *
 
-# random.seed(5)
+random.seed(5)
 
 status_to_sea = [SEA_DARKBLUE, SEA_BLUE, SEA_RED]
 status_to_color = [BLUE, LIGHT_GRAY, RED]
@@ -25,7 +25,7 @@ class Game:
         self.__sea = Group()
         self.__dim = dim
         self.rate = 20
-        # self.explosion = pygame.image.load("explode.png")
+        self.explosion = pygame.image.load("images/explode.png")
         self.screen = pygame.display.set_mode(
             (self.__dim[0] * 20 + 400, self.__dim[1] * 20)
         )
@@ -50,7 +50,6 @@ class Game:
         self.status2 = 0
         self.status3 = 0
 
-        # self.captured = [0, 0, 0, 0, 0, 0]
         self.island_status_blue = ["", "", "", "", "", ""]
         self.island_status_red = ["", "", "", "", "", ""]
         # first 3 strings of the array give the status of the islands of the repective team
@@ -95,10 +94,7 @@ class Game:
 
     def getPositions(self):
         excluded = random.randint(0, 3)
-        # if excluded%2 == 0:
-        #     excluded = 1
-        # else:
-        #     excluded = 2
+
         if excluded == 0 or excluded == 3:
             base_red = (39, 0)
             base_blue = (0, 39)
@@ -178,15 +174,6 @@ class Game:
         while True:
             iter += 1
             if iter <= 3000:
-
-                # self.__red_team.buildWalls(
-                #     self.__island1, self.__island2, self.__island3, 1
-                # )
-
-                # self.__blue_team.buildWalls(
-                #     self.__island1, self.__island2, self.__island3, 2
-                # )
-
                 self.screen.fill(SEA_BLUE)
                 moves = {}
 
@@ -302,14 +289,14 @@ class Game:
                             n = self.__rscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            # print("Redbot error")
+                            print("Red Pirate error")
                         moves[pirate_i] = n
                     for pirate_i in self.__blue_pirates:
                         try:
                             n = self.__bscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            # print("Blubot error")
+                            print("Blue Pirate error")
                         moves[pirate_i] = n
 
                 else:
@@ -318,7 +305,7 @@ class Game:
                             n = self.__bscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            # print("Blue bot error")
+                            print("Blue Pirate error")
                         moves[pirate_i] = n
 
                     for pirate_i in self.__red_pirates:
@@ -326,7 +313,7 @@ class Game:
                             n = self.__rscript.ActPirate(pirate_i)
                         except:
                             n = 0
-                            # print("Redbot error")
+                            print("Red Pirate error")
                         moves[pirate_i] = n
 
                 for pirate_i, n in moves.items():
@@ -345,8 +332,7 @@ class Game:
                             self.__island1, self.__island2, self.__island3
                         )
 
-                self.check_collisions()
-                # print(self.flag1, self.flag2, self.flag3)
+                collisions = self.check_collisions()
                 self.__rum.draw(self.screen)
                 self.__gunpowder.draw(self.screen)
                 self.__wood.draw(self.screen)
@@ -360,8 +346,8 @@ class Game:
                 self.update_score()
                 self.collect()
 
-                # # print(self.island_status_blue)
-                # # print(self.island_status_red)
+                for b in collisions.keys():
+                    self.screen.blit(self.explosion, (b.rect.x, b.rect.y))
 
                 if iter % 10 == 0:
                     self.replenish()

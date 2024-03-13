@@ -22,7 +22,6 @@ class Team:
         self.status3 = 0
         self.__curr_frame = -1
         self.__signal = ""
-        # self.__opponent = [0, 0, 0, 0, 0, 0]
 
         for _ in range(80):
             x = random.randint(0, 39)
@@ -48,41 +47,6 @@ class Team:
                 self.__myGame._Game__PositionToPirate[(x // 20, y // 20)][
                     pirate_i
                 ] = True
-
-    def trackPlayers(self):
-        if self.__type == "red":
-            return self.__myGame.island_status_red
-        else:
-            return self.__myGame.island_status_blue
-
-    def GetYourSignal(self):
-        return self.__signal
-
-    def SetYourSignal(self, s):
-        str = "wncc"
-        # print("signal reset not yet done")
-        if type(s) != type(str) or len(s) > 20:
-            return
-        # print("signal reset done")
-        self.__signal = s
-
-    def GetTotalRum(self):
-        return self.__rum
-
-    def GetTotalGunpowder(self):
-        return self.__gunpowder
-
-    def GetTotalWood(self):
-        return self.__wood
-
-    def GetDeployPoint(self):
-        return (self.rect.x // 20, self.rect.y // 20)
-
-    def GetDimensionX(self):
-        return self.__myGame._Game__dim[0]
-
-    def GetDimensionY(self):
-        return self.__myGame._Game__dim[1]
 
     def __buildWalls(self, island1, island2, island3, island_no):
         wood = self.__wood
@@ -175,21 +139,15 @@ class Team:
                 self.__wood -= 50
                 return
             
-    def buildWalls(self, island_no):
-        return self.__buildWalls(self.__myGame._Game__island1, self.__myGame._Game__island2, self.__myGame._Game__island3, island_no)
-
     def addResource(self, type, x, y, frac):
         x = x * 20
         y = y * 20
 
         if type == -1:
             self.__rum += 100 * frac
-            # # print(len(self.__myGame._Game__rum))
-            # # print(len(self.__myGame._Game__rum))
 
             for i in self.__myGame._Game__rum:
                 if i.rect == (x, y, 20, 20):
-                    # # print(len(self.__myGame._Game__rum))
 
                     self.__myGame._Game__rum.remove(i)
                     break
@@ -197,14 +155,12 @@ class Team:
             self.__gunpowder += 10 * frac
             for i in self.__myGame._Game__gunpowder:
                 if i.rect == (x, y, 20, 20):
-                    # # print("gunpowder")
                     self.__myGame._Game__gunpowder.remove(i)
                     break
         elif type == -3:
             self.__wood += 100 * frac
             for i in self.__myGame._Game__wood:
                 if i.rect == (x, y, 20, 20):
-                    # # print("wood")
                     self.__myGame._Game__wood.remove(i)
                     break
 
@@ -213,8 +169,49 @@ class Team:
             x, y = self.__base
             self.create_Pirate(x * 20, y * 20, "")
 
-    def GetListOfSignals(self):
+    # player functions start here
+
+    def getTeamSignal(self):
+        return self.__signal
+
+    def setTeamSignal(self, s):
+        str = "wncc"
+        if type(s) != type(str) or len(s) > 20:
+            return
+        self.__signal = s
+
+    def getListOfSignals(self):
         res = []
         for x in self.__pirate_list:
             res.append(x._Pirate__signal)
         return res
+    
+    def trackPlayers(self):
+        if self.__type == "red":
+            return self.__myGame.island_status_red
+        else:
+            return self.__myGame.island_status_blue
+
+    def getTotalRum(self):
+        return self.__rum
+
+    def getTotalGunpowder(self):
+        return self.__gunpowder
+
+    def getTotalWood(self):
+        return self.__wood
+
+    def getDeployPoint(self):
+        return (self.rect.x // 20, self.rect.y // 20)
+
+    def getDimensionX(self):
+        return self.__myGame._Game__dim[0]
+
+    def getDimensionY(self):
+        return self.__myGame._Game__dim[1]        
+            
+    def buildWalls(self, island_no):
+        return self.__buildWalls(self.__myGame._Game__island1, self.__myGame._Game__island2, self.__myGame._Game__island3, island_no)
+
+    def getCurrentFrame(self):
+        return self.__myGame._Game__frame

@@ -7,7 +7,6 @@ class Pirate(Sprite):
         super().__init__()
         self.screen = screen
         self.type = type
-        # # print(team._Team__curr_frame)
         self.__myTeam = team
         if self.type == "red":
             self.image = pygame.image.load("images/pirate.png")
@@ -46,7 +45,6 @@ class Pirate(Sprite):
             else:
                 if self.type == "red":
                     island.red_present = True
-                    # # print(island1.red_present)
                 else:
                     island.blue_present = True
 
@@ -85,6 +83,27 @@ class Pirate(Sprite):
                 self.rect.y // 20
             ] = 2
 
+    def __investigate(self,x,y):
+        match(self.__myTeam._Team__myGame._Game__Pirates[x][y]):
+            case 1:
+                if self.type == "red":
+                    return "friend"
+                else:
+                    return "enemy"
+            case 2:
+                if self.type == "red":
+                    return "enemy"
+                else:
+                    return "friend"
+            case 3:
+                return "island1"
+            case 4:
+                return "island2"
+            case 5:
+                return "island3"
+            case _:
+                return "blank"
+
     def move_up(self, island1, island2, island3):
         if self.rect.y > 0:
             try:
@@ -100,7 +119,6 @@ class Pirate(Sprite):
                     break
 
             self.rect.y -= 20
-
             self.__place_after_move()
 
     def move_down(self, island1, island2, island3):
@@ -154,27 +172,10 @@ class Pirate(Sprite):
             self.rect.x += 20
             self.__place_after_move()
 
-    def __investigate(self,x,y):
-        match(self.__myTeam._Team__myGame._Game__Pirates[x][y]):
-            case 1:
-                if self.type == "red":
-                    return "friend"
-                else:
-                    return "enemy"
-            case 2:
-                if self.type == "red":
-                    return "enemy"
-                else:
-                    return "friend"
-            case 3:
-                return "island1"
-            case 4:
-                return "island2"
-            case 5:
-                return "island3"
-            case _:
-                return "blank"
+    # player functions start here
             
+    def investigate_current_position(self):
+        return self.__investigate(self.rect.x // 20, self.rect.y // 20)
 
     def investigate_up(self):
         if self.rect.y == 0:
@@ -225,41 +226,50 @@ class Pirate(Sprite):
             return "wall"
         return self.__investigate(self.rect.x // 20 - 1, self.rect.y // 20 + 1)
 
-    def GetTotalRum(self):
+    def getTotalRum(self):
         return self.__myTeam._Team__rum
 
-    def GetTotalGunpowder(self):
+    def getTotalGunpowder(self):
         return self.__myTeam._Team__gunpowder
 
-    def GetTotalWood(self):
+    def getTotalWood(self):
         return self.__myTeam._Team__wood
 
-    def GetPosition(self):
+    def getPosition(self):
         return (self.rect.x // 20, self.rect.y // 20)
+    
+    def getDeployPoint(self):
+        return self.__myTeam.getDeployPoint()
 
-    def GetDimensionX(self):
+    def getDimensionX(self):
         return self.__myBase._Base__myGame._Game__dim[0]
 
-    def GetDimensionY(self):
+    def getDimensionY(self):
         return self.__myBase._Base__myGame._Game__dim[1]
+    
+    def getInitialSignal(self):
+        return self.__initialSignal
 
+    def getSignal(self):
+        return self.__signal
+    
     def setSignal(self, sig):
         str = "wncc"
         if type(sig) != type(str) or len(sig) > 20:
             return
         self.__signal = sig
 
-    def GetInitialSignal(self):
-        return self.__initialSignal
-
-    def GetYourSignal(self):
-        return self.__signal
-
-    def GetCurrentTeamSignal(self):
+    def getTeamSignal(self):
         return self.__myTeam._Team__signal
 
-    def SetTeamSignal(self, signal):
-        return self.__myTeam.SetYourSignal(signal)
+    def setTeamSignal(self, signal):
+        return self.__myTeam.setTeamSignal(signal)
 
+    def getListofTeamSignals(self):
+        return self.__myTeam.getListofTeamSignals()
+    
     def trackPlayers(self):
         return self.__myTeam.trackPlayers()
+    
+    def getCurrentFrame(self):
+        return self.__myTeam.getCurrentFrame()
