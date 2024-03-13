@@ -2,6 +2,7 @@ import random
 import sys
 from random import random as rnd
 
+import numpy as np
 import pygame
 from pygame.sprite import Group
 
