@@ -173,6 +173,9 @@ class Pirate(Sprite):
             self.__place_after_move()
 
     # player functions start here
+            
+    def investigate_current_position(self):
+        return self.__investigate(self.rect.x // 20, self.rect.y // 20)
 
     def investigate_up(self):
         if self.rect.y == 0:
