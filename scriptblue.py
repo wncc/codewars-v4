@@ -1,4 +1,5 @@
-from random import randint
+import random
+import math
 
 name = "scriptblue"
 
@@ -11,7 +12,7 @@ def moveTo(x, y, Pirate):
         return (position[1] < y) * 2 + 1
     if position[1] == y:
         return (position[0] > x) * 2 + 2
-    if randint(1, 2) == 1:
+    if random.randint(1, 2) == 1:
         return (position[0] > x) * 2 + 2
     else:
         return (position[1] < y) * 2 + 1
@@ -68,7 +69,7 @@ def ActPirate(pirate):
         return moveTo(x, y, pirate)
 
     else:
-        return randint(1, 4)
+        return random.randint(1, 4)
 
 
 def ActTeam(team):

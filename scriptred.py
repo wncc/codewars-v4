@@ -1,5 +1,4 @@
 import random
-import numpy as np
 import math
 
 name = "scriptred"
@@ -26,7 +25,6 @@ def moveAway(x, y, Pirate):
         return (position[0] < x) * 2 + 2
     else:
         return (position[1] > y) * 2 + 1
-
 
 def circleAround(x, y, radius, Pirate, initial="abc", clockwise=True):
     position = Pirate.getPosition()
@@ -139,9 +137,9 @@ def ActPirate(pirate):
         pirate.setSignal(tmp4)
         dn = 1
 
-    if pirate.getTeamSignal() != "":
-        s2 = pirate.getTeamSignal()
-        l2 = s.split(",")
+    if pirate.getSignal() != "":
+        s2 = pirate.getSignal()
+        l2 = s2.split(",")
         x2 = int(l2[0][1:])
         y2 = int(l2[1])
         position = pirate.getPosition()
@@ -149,9 +147,7 @@ def ActPirate(pirate):
             return 0
         return moveTo(x2, y2, pirate)
 
-
     else:
-        # print("randint")
         return random.randint(1, 4)
 
 

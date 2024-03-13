@@ -11,8 +11,8 @@ class Team:
         self.__myGame = game
         self.__type = type
         self.__rum = 400
-        self.__gunpowder = 1000
-        self.__wood = 300
+        self.__gunpowder = 500
+        self.__wood = 150
         self.__flag1 = None
         self.__flag2 = None
         self.__flag3 = None
@@ -23,7 +23,7 @@ class Team:
         self.__curr_frame = -1
         self.__signal = ""
 
-        for _ in range(80):
+        for _ in range(8):
             x = random.randint(0, 39)
             y = random.randint(0, 39)
             self.create_Pirate(base[0] * 20, base[1] * 20, "")
@@ -144,7 +144,7 @@ class Team:
         y = y * 20
 
         if type == -1:
-            self.__rum += 100 * frac
+            self.__rum += 20 * frac
 
             for i in self.__myGame._Game__rum:
                 if i.rect == (x, y, 20, 20):
@@ -152,13 +152,13 @@ class Team:
                     self.__myGame._Game__rum.remove(i)
                     break
         elif type == -2:
-            self.__gunpowder += 10 * frac
+            self.__gunpowder += 50 * frac
             for i in self.__myGame._Game__gunpowder:
                 if i.rect == (x, y, 20, 20):
                     self.__myGame._Game__gunpowder.remove(i)
                     break
         elif type == -3:
-            self.__wood += 100 * frac
+            self.__wood += 25 * frac
             for i in self.__myGame._Game__wood:
                 if i.rect == (x, y, 20, 20):
                     self.__myGame._Game__wood.remove(i)

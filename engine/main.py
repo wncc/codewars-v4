@@ -11,12 +11,9 @@ from .island import Island
 from .team import Team
 from .utils import *
 
-random.seed(5)
-
 status_to_sea = [SEA_DARKBLUE, SEA_BLUE, SEA_RED]
 status_to_color = [BLUE, LIGHT_GRAY, RED]
 status_to_team = ["Blue", "Neutral", "Red"]
-
 
 class Game:
     def __init__(self, dim, red_team, blue_team):
@@ -285,11 +282,11 @@ class Game:
 
                 if rnd() > 0.5:
                     for pirate_i in self.__red_pirates:
-                        try:
-                            n = self.__rscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Red Pirate error")
+                        # try:
+                        n = self.__rscript.ActPirate(pirate_i)
+                        # except:
+                        #     n = 0
+                        #     print("Red Pirate error")
                         moves[pirate_i] = n
                     for pirate_i in self.__blue_pirates:
                         try:
@@ -309,11 +306,11 @@ class Game:
                         moves[pirate_i] = n
 
                     for pirate_i in self.__red_pirates:
-                        try:
-                            n = self.__rscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Red Pirate error")
+                        # try:
+                        n = self.__rscript.ActPirate(pirate_i)
+                        # except:
+                        #     n = 0
+                        #     print("Red Pirate error")
                         moves[pirate_i] = n
 
                 for pirate_i, n in moves.items():
