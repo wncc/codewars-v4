@@ -9,7 +9,6 @@ def def ActTeam(team):
     team.buildWalls(1)
     team.buildWalls(2)
     team.buildWalls(3)
-    
 ```
 
 ## Actions
