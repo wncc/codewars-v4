@@ -267,3 +267,6 @@ class Pirate(Sprite):
 
     def getListofTeamSignals(self):
         return self.__myTeam.getListofTeamSignals()
+    
+    def getCurrentFrame(self):
+        return self.__myTeam.getCurrentFrame()

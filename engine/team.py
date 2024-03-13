@@ -212,3 +212,6 @@ class Team:
         for x in self.__pirate_list:
             res.append(x._Pirate__signal)
         return res
+
+    def getCurrentFrame(self):
+        return self.__myGame._Game__frame
