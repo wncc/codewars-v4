@@ -174,7 +174,7 @@ class Game:
         while True:
             iter += 1
             if iter <= 3000:
-                self.screen.fill(SEA_BLUE)
+                self.screen.fill(DARK_GREY)
                 moves = {}
 
                 status1 = self.__island1.check(iter)
@@ -478,20 +478,20 @@ class Game:
 
     def buttons(self):
         button_font = pygame.font.SysFont(None, 36)
-        slow_down = button_font.render("Slower", True, LIGHT_GRAY)
+        slow_down = button_font.render("Slower", True, DARK_GREY)
         self.slow_rect = slow_down.get_rect()
         self.slow_rect.center = ((self.__dim[0]) * 20 + 60, self.__dim[1] * 18 + 5)
         self.slow_rect.width += 20
         self.slow_rect.height += 20
-        pygame.draw.rect(self.screen, DARK_GREY, self.slow_rect)
+        pygame.draw.rect(self.screen, LIGHT_GRAY, self.slow_rect)
         self.screen.blit(slow_down, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 18))
 
-        speed_up = button_font.render("Faster", True, LIGHT_GRAY)
+        speed_up = button_font.render("Faster", True, DARK_GREY)
         self.fast_rect = speed_up.get_rect()
         self.fast_rect.center = ((self.__dim[0]) * 20 + 258, self.__dim[1] * 18 + 5)
         self.fast_rect.width += 20
         self.fast_rect.height += 20
-        pygame.draw.rect(self.screen, DARK_GREY, self.fast_rect)
+        pygame.draw.rect(self.screen, LIGHT_GRAY, self.fast_rect)
         self.screen.blit(speed_up, ((self.__dim[0]) * 20 + 230, self.__dim[1] * 18))
 
     def check_events(self):
@@ -542,7 +542,7 @@ class Game:
     def update_score(self):
         """Update scores in the scoreboard"""
         title_font = pygame.font.SysFont(None, 48)
-        title = title_font.render("Score Board", True, WHITE)
+        title = title_font.render("SCORE BOARD", True, GREEN)
         titlerect = title.get_rect()
         titlerect.x = self.__dim[0] * 20 + 100
         titlerect.y = 40
@@ -552,13 +552,13 @@ class Game:
         blue_head = head_font.render(self.bname, False, BLUE)
         self.screen.blit(blue_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 2.5))
         blue_total = norm_font.render(
-            "Total rum :" + str(round(self.__blue_team._Team__rum, 2)),
+            "Rum: " + str(round(self.__blue_team._Team__rum, 2)),
             False,
             LIGHT_GRAY,
         )
         self.screen.blit(blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5))
         blue_total = norm_font.render(
-            "Total gunpowder :" + str(round(self.__blue_team._Team__gunpowder, 2)),
+            "Gunpowder: " + str(round(self.__blue_team._Team__gunpowder, 2)),
             False,
             LIGHT_GRAY,
         )
@@ -566,7 +566,7 @@ class Game:
             blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 20)
         )
         blue_total = norm_font.render(
-            "Total wood :" + str(round(self.__blue_team._Team__wood, 2)),
+            "Wood: " + str(round(self.__blue_team._Team__wood, 2)),
             False,
             LIGHT_GRAY,
         )
@@ -574,19 +574,19 @@ class Game:
             blue_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 40)
         )
         blue_flag1coordi = norm_font.render(
-            "Flag 1 : " + str(self.__blue_team._Team__flag1), False, LIGHT_GRAY
+            "Flag 1: " + str(self.__blue_team._Team__flag1), False, LIGHT_GRAY
         )
         self.screen.blit(
             blue_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 80)
         )
         blue_flag2coordi = norm_font.render(
-            "Flag 2 : " + str(self.__blue_team._Team__flag2), False, LIGHT_GRAY
+            "Flag 2: " + str(self.__blue_team._Team__flag2), False, LIGHT_GRAY
         )
         self.screen.blit(
             blue_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 100)
         )
         blue_flag3coordi = norm_font.render(
-            "Flag 3 : " + str(self.__blue_team._Team__flag3), False, LIGHT_GRAY
+            "Flag 3: " + str(self.__blue_team._Team__flag3), False, LIGHT_GRAY
         )
         self.screen.blit(
             blue_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 120)
@@ -598,19 +598,19 @@ class Game:
             blue_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 3.5 + 60)
         )
         red_flag1coordi = norm_font.render(
-            "Flag 1 : " + str(self.__red_team._Team__flag1), False, LIGHT_GRAY
+            "Flag 1: " + str(self.__red_team._Team__flag1), False, LIGHT_GRAY
         )
         self.screen.blit(
             red_flag1coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 80)
         )
         red_flag2coordi = norm_font.render(
-            "Flag 2 : " + str(self.__red_team._Team__flag2), False, LIGHT_GRAY
+            "Flag 2: " + str(self.__red_team._Team__flag2), False, LIGHT_GRAY
         )
         self.screen.blit(
             red_flag2coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 100)
         )
         red_flag3coordi = norm_font.render(
-            "Flag 3 : " + str(self.__red_team._Team__flag3), False, LIGHT_GRAY
+            "Flag 3: " + str(self.__red_team._Team__flag3), False, LIGHT_GRAY
         )
         self.screen.blit(
             red_flag3coordi, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 120)
@@ -619,13 +619,13 @@ class Game:
         red_head = head_font.render(self.rname, False, RED)
         self.screen.blit(red_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 8))
         red_total = norm_font.render(
-            "Total rum :" + str(round(self.__red_team._Team__rum, 2)),
+            "Rum: " + str(round(self.__red_team._Team__rum, 2)),
             False,
             LIGHT_GRAY,
         )
         self.screen.blit(red_total, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9))
         red_total = norm_font.render(
-            "Total gunpowder :" + str(round(self.__red_team._Team__gunpowder, 2)),
+            "Gunpowder: " + str(round(self.__red_team._Team__gunpowder, 2)),
             False,
             LIGHT_GRAY,
         )
@@ -634,7 +634,7 @@ class Game:
         )
 
         red_total = norm_font.render(
-            "Total wood :" + str(round(self.__red_team._Team__wood, 2)),
+            "Wood: " + str(round(self.__red_team._Team__wood, 2)),
             False,
             LIGHT_GRAY,
         )
@@ -649,32 +649,18 @@ class Game:
             red_Pirates, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 60)
         )
 
-        # s1 = head_font.render(str(self.status1), False, RED)
-        # self.screen.blit(s1, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 140))
-        # s2 = head_font.render(str(self.status2), False, RED)
-        # self.screen.blit(s2, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 160))
-        # s3 = head_font.render(str(self.status3), False, RED)
-        # self.screen.blit(s3, ((self.__dim[0]) * 20 + 300, self.__dim[1] * 9 + 180))
-
-        # stat1 = head_font.render("Island 1", False, LIGHT_GRAY)
-        # self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 140))
-        # stat2 = head_font.render("Island 2", False, LIGHT_GRAY)
-        # self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 160))
-        # stat3 = head_font.render("Island 3", False, LIGHT_GRAY)
-        # self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 9 + 180))
-
         s1 = head_font.render(
             status_to_team[self.status1 + 1], False, status_to_color[self.status1 + 1]
         )
-        self.screen.blit(s1, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 140))
+        self.screen.blit(s1, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 170))
         s2 = head_font.render(
             status_to_team[self.status2 + 1], False, status_to_color[self.status2 + 1]
         )
-        self.screen.blit(s2, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 165))
+        self.screen.blit(s2, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 200))
         s3 = head_font.render(
             status_to_team[self.status3 + 1], False, status_to_color[self.status3 + 1]
         )
-        self.screen.blit(s3, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 190))
+        self.screen.blit(s3, ((self.__dim[0]) * 20 + 170, self.__dim[1] * 10 + 230))
 
         if self.__island1.progress():
             s1 = head_font.render(
@@ -682,7 +668,7 @@ class Game:
                 False,
                 RED if self.__island1.capturing_team == 1 else BLUE,
             )
-            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 140))
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 170))
 
         if self.__island2.progress():
             s1 = head_font.render(
@@ -690,7 +676,7 @@ class Game:
                 False,
                 RED if self.__island2.capturing_team == 1 else BLUE,
             )
-            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 165))
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 200))
 
         if self.__island3.progress():
             s1 = head_font.render(
@@ -698,14 +684,17 @@ class Game:
                 False,
                 RED if self.__island3.capturing_team == 1 else BLUE,
             )
-            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 190))
+            self.screen.blit(s1, ((self.__dim[0]) * 20 + 280, self.__dim[1] * 10 + 230))
 
-        stat1 = head_font.render("Island 1:", False, LIGHT_GRAY)
-        self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 140))
-        stat2 = head_font.render("Island 2:", False, LIGHT_GRAY)
-        self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 165))
-        stat3 = head_font.render("Island 3:", False, LIGHT_GRAY)
-        self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 190))
+        island_head = head_font.render("Island Statuses", False, GREEN)
+        self.screen.blit(island_head, ((self.__dim[0]) * 20 + 30, self.__dim[1] * 10 + 140))
+
+        stat1 = head_font.render("Island 1: ", False, LIGHT_GRAY)
+        self.screen.blit(stat1, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 170))
+        stat2 = head_font.render("Island 2: ", False, LIGHT_GRAY)
+        self.screen.blit(stat2, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 200))
+        stat3 = head_font.render("Island 3: ", False, LIGHT_GRAY)
+        self.screen.blit(stat3, ((self.__dim[0]) * 20 + 50, self.__dim[1] * 10 + 230))
 
     def updatePirateMap(self):
         for i in range(0, self.__dim[0]):
@@ -764,7 +753,6 @@ class Game:
 
     def winner(self, team):
         """Check conditions of game over"""
-        # print("hi")
         game_over_font = pygame.font.SysFont(None, 48)
 
         if team == "blue":
@@ -792,7 +780,6 @@ class Game:
                 self.check_events()
 
     def time_up(self):
-        # print("time")
         nr = 0
         nb = 0
         for i in [self.status1, self.status2, self.status3]:
