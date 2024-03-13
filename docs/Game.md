@@ -44,7 +44,7 @@ Wood is never replenished, and is thus a limited resource on the Map.
 ### Gunpowder
 Gunpowder is an important resource used in battles, when pirates come in contact with each other <u>i.e.</u> move onto the same tile.
 
-If the pirate's team has atleast `100` Gunpowder, then the pirate destroys the enemy pirate. j
+If the pirate's team has atleast `100` Gunpowder, then the pirate destroys the enemy pirate.
 
 Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
