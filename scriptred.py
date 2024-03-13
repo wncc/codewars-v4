@@ -1,102 +1,8 @@
-# from random import randint
+import random
+import numpy as np
+import math
 
-# def moveTo(x, y, Pirate):
-#         position=Pirate.getPosition()
-#         if position[0] == x and position[1] == y:
-#                 return 0
-#         if position[0] == x:
-#                 return (position[1]<y)*2+1
-#         if position[1] == y :
-#                 return (position[0]>x)*2+2
-#         if randint(1,2)==1:
-#                 return (position[0]>x)*2+2
-#         else:
-#                 return (position[1]<y)*2+1
-
-
-# def ActPirate(pirate):
-#         # # print("hell")
-#         up = pirate.investigate_up()
-#         down = pirate.investigate_down()
-#         left = pirate.investigate_left()
-#         right = pirate.investigate_right()
-#         x,y = pirate.getPosition()
-#         pirate.setSignal('')
-#         s = pirate.trackPlayers()
-#         # print(s)
-#         # print(pirate.getSignal())
-#         if (up == "island1" and s[0] !="myCaptured") or (up == "island2" and s[1] != "myCaptured") or (up == "island3" and s[2]!="myCaptured"):
-#                 s = up[-1] + str(x)+ ',' + str(y-1)
-#                 # # print(s)
-#                 # # print("herhe")
-#                 # # print(pirate._Pirate__myTeam._Team__base)
-#                 pirate.setTeamSignal(s)
-
-#         if (down == "island1" and s[0] !="myCaptured") or (down == "island2" and s[1] != "myCaptured") or (down == "island3" and s[2]!="myCaptured"):
-#                 s = down[-1] + str(x)+ ',' + str(y+1)
-#                 # # print(s)
-#                 # # print("herhe")
-#                 # # print("herhe")
-#                 # # print(pirate._Pirate__myTeam._Team__base)
-#                 pirate.setTeamSignal(s)
-
-#         if (left == "island1" and s[0] !="myCaptured") or (left == "island2" and s[1] != "myCaptured") or (left == "island3" and s[2]!="myCaptured"):
-#                 s = left[-1] + str(x-1) + ','+ str(y)
-#                 # # print("herhe")
-#                 # # print(s)
-#                 # # print("herhe")
-#                 # # print(pirate._Pirate__myTeam._Team__base)
-#                 pirate.setTeamSignal(s)
-
-#         if (right == "island1" and s[0] !="myCaptured") or (right == "island2" and s[1] != "myCaptured") or (right == "island3" and s[2]!="myCaptured"):
-#                 s = right[-1] + str(x+1) + ',' + str(y)
-#                 # # print("herhe")
-#                 # # print(s)
-#                 # # print("herhe")
-#                 # # print(pirate._Pirate__myTeam._Team__base)
-#                 pirate.setTeamSignal(s)
-
-#         # print(pirate.getTeamSignal())
-#         if pirate.getTeamSignal() != "":
-#                 s = pirate.getTeamSignal()
-#                 l = s.split(',')
-#                 x = int(l[0][1:])
-#                 y = int(l[1])
-#                 # print("moveto")
-#                 return moveTo(x,y,pirate)
-
-#         else:
-#                 # print("randint")
-#                 return randint(1,4)
-
-# def ActTeam(team):
-#        l = team.trackPlayers()
-#        s = team.getTeamSignal()
-
-#        if s:
-#         #       # print(s)
-#                 island_no = int(s[0])
-#                 signal = l[island_no-1]
-#         #       # print(signal)
-#         #       # print(island_no)
-#                 if signal == "myCaptured" + str(island_no):
-#                      # print("signal reset here")
-#                      team.setTeamSignal("")
-
-
-from random import randint, choice
-
-# ln=0
-# rn=0
-# un=0
-# dn=0
-
-# def investigate(Pirate):
-#         return (Pirate.investigate_nw(), Pirate.investigate_up(), Pirate.investigate_ne(),
-#                 Pirate.investigate_left(), "blank", Pirate.investigate_right(),
-#                 Pirate.investigate_sw(), Pirate.investigate_down(), Pirate.investigate_se())
 name = "scriptred"
-
 
 def moveTo(x, y, Pirate):
     position = Pirate.getPosition()
@@ -106,7 +12,7 @@ def moveTo(x, y, Pirate):
         return (position[1] < y) * 2 + 1
     if position[1] == y:
         return (position[0] > x) * 2 + 2
-    if randint(1, 2) == 1:
+    if random.randint(1, 2) == 1:
         return (position[0] > x) * 2 + 2
     else:
         return (position[1] < y) * 2 + 1
@@ -115,8 +21,8 @@ def moveTo(x, y, Pirate):
 def moveAway(x, y, Pirate):
     position = Pirate.getPosition()
     if position[0] == x and position[1] == y:
-        return randint(1, 4)
-    if randint(1, 2) == 1:
+        return random.randint(1, 4)
+    if random.randint(1, 2) == 1:
         return (position[0] < x) * 2 + 2
     else:
         return (position[1] > y) * 2 + 1
@@ -147,24 +53,6 @@ def circleAround(x, y, radius, Pirate, initial="abc", clockwise=True):
             Pirate,
         )
 
-
-# def ActPirate(Pirate):
-#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 1)
-#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 2)
-#         Pirate._Pirate__myTeam.buildWalls(Pirate._Pirate__myTeam._Team__myGame._Game__island1, Pirate._Pirate__myTeam._Team__myGame._Game__island2, Pirate._Pirate__myTeam._Team__myGame._Game__island3, 3)
-#         return randint(1, 4)
-
-# def deployPirates():
-#         # returns a list of coordinates to deploy pirates
-#         pass
-
-# def ActTeam(Team):
-#         pass
-
-
-# def setpos(pirate, x,y, x1 ,y1,r):
-
-
 def radius(pirate, x, y, x1, y1, r):
     pos = []
     for i in range(x1 - r, x1 + r + 1):
@@ -189,7 +77,6 @@ def ActPirate(pirate):
     tmp2 = ""
     tmp3 = ""
     tmp4 = ""
-    # pirate.setSignal("")
     if (
         (up == "island1" and s[0] != "myCaptured")
         or (up == "island2" and s[1] != "myCaptured")
@@ -239,10 +126,7 @@ def ActPirate(pirate):
         tmp4 = up[-1] + str(x + 1) + "," + str(y + 1)
         pirate.setTeamSignal(s)
 
-    # # print("fjfjf")
-
     if tmp1 != "":
-        # print("not here")
         pirate.setSignal(tmp1)
         ln = 1
     elif tmp2 != "":
@@ -255,8 +139,6 @@ def ActPirate(pirate):
         pirate.setSignal(tmp4)
         dn = 1
 
-    # print("herhe")
-    # print(pirate.getTeamSignal())
     if pirate.getTeamSignal() != "":
         s2 = pirate.getTeamSignal()
         l2 = s.split(",")
@@ -267,17 +149,10 @@ def ActPirate(pirate):
             return 0
         return moveTo(x2, y2, pirate)
 
-    # elif pirate.getTeamSignal() != "":
-    #         s = pirate.getTeamSignal()
-    #         l = s.split(',')
-    #         x1 = int(l[0][1:])
-    #         y1 = int(l[1])
-    #         # print("moveto")
-    #         return moveTo(x1,y1, pirate)
 
     else:
         # print("randint")
-        return randint(1, 4)
+        return random.randint(1, 4)
 
 
 def ActTeam(team):
