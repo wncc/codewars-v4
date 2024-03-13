@@ -264,9 +264,6 @@ class Pirate(Sprite):
 
     def setTeamSignal(self, signal):
         return self.__myTeam.setTeamSignal(signal)
-
-    def getListofTeamSignals(self):
-        return self.__myTeam.getListofTeamSignals()
     
     def trackPlayers(self):
         return self.__myTeam.trackPlayers()

@@ -84,10 +84,6 @@ Returns the current signal of the team.
 ### `setTeamSignal(sig)`
 Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
 
-### `getListofTeamSignals() -> str[]`
-Returns a list containing the signals of all the pirates in the team.
-This list is **read-only**, changing signals in the array will not change it for the pirate.
-
 ### `trackPlayers()`
 Returns a list of length 6, containing info on the current status of all the islands.
 
