@@ -46,6 +46,8 @@ Gunpowder is an important resource used in battles, when pirates come in contact
 
 If the pirate's team has atleast `100` Gunpowder, then the pirate destroys the enemy pirate.
 
+More specifically, if both teams have atleast `100` gunpowder, both pirates are killed. If only one team has atleast `100` gunpowder, only the enemy pirate is killed. If both teams have less than `100` gunpowder, neither pirate is killed.
+
 Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
 ## Base
