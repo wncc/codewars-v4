@@ -15,8 +15,6 @@ import tkinter
 from tkinter import messagebox
 import traceback
 
-# random.seed(5)
-
 status_to_sea = [SEA_DARKBLUE, SEA_BLUE, SEA_RED]
 status_to_color = [BLUE, LIGHT_GRAY, RED]
 status_to_team = ["Blue", "Neutral", "Red"]
