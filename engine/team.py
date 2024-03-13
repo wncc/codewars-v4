@@ -171,12 +171,6 @@ class Team:
 
     # player functions start here
 
-    def trackPlayers(self):
-        if self.__type == "red":
-            return self.__myGame.island_status_red
-        else:
-            return self.__myGame.island_status_blue
-
     def getTeamSignal(self):
         return self.__signal
 
@@ -185,6 +179,18 @@ class Team:
         if type(s) != type(str) or len(s) > 20:
             return
         self.__signal = s
+
+    def getListOfSignals(self):
+        res = []
+        for x in self.__pirate_list:
+            res.append(x._Pirate__signal)
+        return res
+    
+    def trackPlayers(self):
+        if self.__type == "red":
+            return self.__myGame.island_status_red
+        else:
+            return self.__myGame.island_status_blue
 
     def getTotalRum(self):
         return self.__rum
@@ -206,12 +212,6 @@ class Team:
             
     def buildWalls(self, island_no):
         return self.__buildWalls(self.__myGame._Game__island1, self.__myGame._Game__island2, self.__myGame._Game__island3, island_no)
-
-    def getListOfSignals(self):
-        res = []
-        for x in self.__pirate_list:
-            res.append(x._Pirate__signal)
-        return res
 
     def getCurrentFrame(self):
         return self.__myGame._Game__frame
