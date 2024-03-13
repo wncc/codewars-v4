@@ -60,7 +60,7 @@ Pirates are the functional units of a team, that explore the map, collect resour
 
 The primary action that a pirate can perform is to **move**, and to decide where to move it can investigate its surroundings and communicate with its team via signals.
 
-Each ship occupies exactly one tile at any time, and any tile that has one or more ships from a team will have a boat displayed on it.
+Each pirate occupies exactly one tile at any time, and any tile that has one or more pirates from a team will have a ship displayed on it.
 
 ## 2. Communication Between Base and Robots
 

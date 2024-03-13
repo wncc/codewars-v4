@@ -67,10 +67,10 @@ def radius(pirate, x, y, x1, y1, r):
 
 
 def ActPirate(pirate):
-    up = pirate.investigate_up()
-    down = pirate.investigate_down()
-    left = pirate.investigate_left()
-    right = pirate.investigate_right()
+    up = pirate.investigate_up()[0]
+    down = pirate.investigate_down()[0]
+    left = pirate.investigate_left()[0]
+    right = pirate.investigate_right()[0]
     x, y = pirate.getPosition()
     s = pirate.trackPlayers()
     tmp1 = ""

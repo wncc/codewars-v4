@@ -14,12 +14,12 @@ def ActPirate(pirate):
 
 ## Investigation
 
-A pirate is able to investigate all 8 tiles surrounding it, by which it can find out what lies in those tiles.
+A pirate is able to investigate the tile it is on, and all 8 tiles surrounding it, by which it can find out what lies in those tiles.
 Tiles are referred to based on their direction with respect to the pirate.
 
 ![The names used to refer to the tiles adjacent to the pirate](/docs/media/directions.jpg)
 
-- **`investigate_current_position()`** : This function is used to investigate the current location of the pirate.
+- **`investigate_current()`** : This function is used to investigate the current location of the pirate.
 
 - **`investigate_up()`** : This function is used to investigate the area above the current location of the pirate.
 
@@ -37,12 +37,18 @@ Tiles are referred to based on their direction with respect to the pirate.
 
 - **`investigate_sw()`** : This function is used to investigate the area in the southwest direction of the current location of the pirate.
 
-Each of the above functions returns one of the following strings, corresponding to the contents of the investigated tile: 
+Each of the above functions returns a tuple of two strings `(where, who)`, `where` representing the type of the tile, and `who` the presence of pirates:
+
+`where` can take the following values:
 - ***'wall'*** if the tile is out of bounds
-- ***'friend'*** if a ship from the same team is on the tile
-- ***'enemy'*** if a ship from the other team is on the tile
 - ***'island1', 'island2' or 'island3'*** if the tile is a part of an island
-- ***'blank'*** in all other cases
+- ***'blank'*** in all other cases (<u>i.e.</u> the sea)
+
+`who` can take the following values:
+- ***'friend'*** if only pirates from the same team are on the tile
+- ***'enemy'*** if only pirates from the other team are on the tile
+- ***'both'*** if pirates from both teams are on the tile
+- ***'blank'*** in all other cases (<u>i.e.</u> no pirates)
 
 ## Info
 
@@ -61,6 +67,9 @@ Returns the position of the pirate as a tuple `(x, y)`.
 ### `getDeployPoint()`
 Returns the coordinates of the deploy point of the team as a tuple `(x, y)`.
 
+### `getID()`
+Returns a string that uniquely identifies a pirate from each team, corresponding to the order of its creation
+
 ### `getDimensionX()`
 Returns the X dimension of the game.
 
@@ -68,9 +77,6 @@ Returns the X dimension of the game.
 Returns the Y dimension of the game.
 
 ## Signalling
-
-### `GetInitialSignal()`
-Returns the initial signal of the pirate.
 
 ### `getSignal()`
 Returns the current signal of the pirate.

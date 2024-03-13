@@ -10,13 +10,19 @@ from .collectible import Collectible, Sea
 from .island import Island
 from .team import Team
 from .utils import *
+import random
+import tkinter
+from tkinter import messagebox
+import traceback
 
-random.seed(5)
+# random.seed(5)
 
 status_to_sea = [SEA_DARKBLUE, SEA_BLUE, SEA_RED]
 status_to_color = [BLUE, LIGHT_GRAY, RED]
 status_to_team = ["Blue", "Neutral", "Red"]
 
+root = tkinter.Tk()
+root.withdraw()
 
 class Game:
     def __init__(self, dim, red_team, blue_team):
@@ -39,7 +45,7 @@ class Game:
         self.__wood = Group()
         self.__red_pirates = Group()
         self.__blue_pirates = Group()
-        self.__Pirates = np.zeros((self.__dim[0], self.__dim[1]))
+        self.__Pirates = np.zeros((self.__dim[0], self.__dim[1]), dtype=int)
         # 0 in self.Pirates means no Pirates
         # 1 means one Pirate of red team
         # 2 means one Pirate of blue team
@@ -65,9 +71,9 @@ class Game:
         )
 
         for pirate in self.__red_pirates:
-            self.__Pirates[pirate.rect.x // 20][pirate.rect.y // 20] = 1
+            self.__Pirates[pirate.rect.x // 20][pirate.rect.y // 20] |= 1
         for pirate in self.__blue_pirates:
-            self.__Pirates[pirate.rect.x // 20][pirate.rect.y // 20] = 2
+            self.__Pirates[pirate.rect.x // 20][pirate.rect.y // 20] |= 2
 
         self.__island1 = Island(self.screen, 1, self, self.flag1, self.__Pirates)
         self.__island2 = Island(self.screen, 2, self, self.flag2, self.__Pirates)
@@ -283,38 +289,32 @@ class Game:
                 self.__rscript.ActTeam(self.__red_team)
                 self.__bscript.ActTeam(self.__blue_team)
 
-                if rnd() > 0.5:
-                    for pirate_i in self.__red_pirates:
-                        try:
+                try:
+                    current_script_name = ''
+                    if rnd() > 0.5:
+                        current_script_name = self.rname
+                        for pirate_i in self.__red_pirates:
                             n = self.__rscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Red Pirate error")
-                        moves[pirate_i] = n
-                    for pirate_i in self.__blue_pirates:
-                        try:
+                            moves[pirate_i] = n
+                        current_script_name = self.bname
+                        for pirate_i in self.__blue_pirates:
                             n = self.__bscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Blue Pirate error")
-                        moves[pirate_i] = n
-
-                else:
-                    for pirate_i in self.__blue_pirates:
-                        try:
+                            moves[pirate_i] = n
+                    else:
+                        current_script_name = self.bname
+                        for pirate_i in self.__blue_pirates:
                             n = self.__bscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Blue Pirate error")
-                        moves[pirate_i] = n
-
-                    for pirate_i in self.__red_pirates:
-                        try:
+                            moves[pirate_i] = n
+                        current_script_name = self.rname
+                        for pirate_i in self.__red_pirates:
                             n = self.__rscript.ActPirate(pirate_i)
-                        except:
-                            n = 0
-                            print("Red Pirate error")
-                        moves[pirate_i] = n
+                            moves[pirate_i] = n
+                except Exception as e:
+                    with open("error_log.txt", "w") as file:
+                        file.write(traceback.format_exc())
+
+                    messagebox.showerror('Script Error', f'{current_script_name} threw an error:\n{e}\n\nPlease check the error_log.txt file for more details.')
+                    exit(0)
 
                 for pirate_i, n in moves.items():
                     if n == 1:
@@ -367,71 +367,71 @@ class Game:
     def discovery(self):
         for pirate in self.__red_pirates:
             if (
-                pirate.investigate_up() == "island1"
-                or pirate.investigate_down() == "island1"
-                or pirate.investigate_left() == "island1"
-                or pirate.investigate_right() == "island1"
-                or pirate.investigate_nw() == "island1"
-                or pirate.investigate_ne() == "island1"
-                or pirate.investigate_sw() == "island1"
-                or pirate.investigate_se() == "island1"
+                pirate.investigate_up()[0] == "island1"
+                or pirate.investigate_down()[0] == "island1"
+                or pirate.investigate_left()[0] == "island1"
+                or pirate.investigate_right()[0] == "island1"
+                or pirate.investigate_nw()[0] == "island1"
+                or pirate.investigate_ne()[0] == "island1"
+                or pirate.investigate_sw()[0] == "island1"
+                or pirate.investigate_se()[0] == "island1"
             ):
                 pirate._Pirate__myTeam._Team__flag1 = self.flag1
             elif (
-                pirate.investigate_up() == "island2"
-                or pirate.investigate_down() == "island2"
-                or pirate.investigate_left() == "island2"
-                or pirate.investigate_right() == "island2"
-                or pirate.investigate_nw() == "island2"
-                or pirate.investigate_ne() == "island2"
-                or pirate.investigate_sw() == "island2"
-                or pirate.investigate_se() == "island2"
+                pirate.investigate_up()[0] == "island2"
+                or pirate.investigate_down()[0] == "island2"
+                or pirate.investigate_left()[0] == "island2"
+                or pirate.investigate_right()[0] == "island2"
+                or pirate.investigate_nw()[0] == "island2"
+                or pirate.investigate_ne()[0] == "island2"
+                or pirate.investigate_sw()[0] == "island2"
+                or pirate.investigate_se()[0] == "island2"
             ):
                 pirate._Pirate__myTeam._Team__flag2 = self.flag2
             elif (
-                pirate.investigate_up() == "island3"
-                or pirate.investigate_down() == "island3"
-                or pirate.investigate_left() == "island3"
-                or pirate.investigate_right() == "island3"
-                or pirate.investigate_nw() == "island3"
-                or pirate.investigate_ne() == "island3"
-                or pirate.investigate_sw() == "island3"
-                or pirate.investigate_se() == "island3"
+                pirate.investigate_up()[0] == "island3"
+                or pirate.investigate_down()[0] == "island3"
+                or pirate.investigate_left()[0] == "island3"
+                or pirate.investigate_right()[0] == "island3"
+                or pirate.investigate_nw()[0] == "island3"
+                or pirate.investigate_ne()[0] == "island3"
+                or pirate.investigate_sw()[0] == "island3"
+                or pirate.investigate_se()[0] == "island3"
             ):
                 pirate._Pirate__myTeam._Team__flag3 = self.flag3
 
         for pirate in self.__blue_pirates:
             if (
-                pirate.investigate_up() == "island1"
-                or pirate.investigate_down() == "island1"
-                or pirate.investigate_left() == "island1"
-                or pirate.investigate_right() == "island1"
-                or pirate.investigate_nw() == "island1"
-                or pirate.investigate_ne() == "island1"
-                or pirate.investigate_sw() == "island1"
-                or pirate.investigate_se() == "island1"
+                pirate.investigate_up()[0] == "island1"
+                or pirate.investigate_down()[0] == "island1"
+                or pirate.investigate_left()[0] == "island1"
+                or pirate.investigate_right()[0] == "island1"
+                or pirate.investigate_nw()[0] == "island1"
+                or pirate.investigate_ne()[0] == "island1"
+                or pirate.investigate_sw()[0] == "island1"
+                or pirate.investigate_se()[0] == "island1"
             ):
                 pirate._Pirate__myTeam._Team__flag1 = self.flag1
             elif (
-                pirate.investigate_up() == "island2"
-                or pirate.investigate_down() == "island2"
-                or pirate.investigate_left() == "island2"
-                or pirate.investigate_right() == "island2"
-                or pirate.investigate_nw() == "island2"
-                or pirate.investigate_ne() == "island2"
-                or pirate.investigate_sw() == "island2"
-                or pirate.investigate_se() == "island2"
+                pirate.investigate_up()[0] == "island2"
+                or pirate.investigate_down()[0] == "island2"
+                or pirate.investigate_left()[0] == "island2"
+                or pirate.investigate_right()[0] == "island2"
+                or pirate.investigate_nw()[0] == "island2"
+                or pirate.investigate_ne()[0] == "island2"
+                or pirate.investigate_sw()[0] == "island2"
+                or pirate.investigate_se()[0] == "island2"
             ):
                 pirate._Pirate__myTeam._Team__flag2 = self.flag2
             elif (
-                pirate.investigate_up() == "island3"
-                or pirate.investigate_down() == "island3"
-                or pirate.investigate_left() == "island3"
-                or pirate.investigate_right() == "island3"
-                or pirate.investigate_nw() == "island3"
-                or pirate.investigate_ne() == "island3"
-                or pirate.investigate_sw() == "island3"
-                or pirate.investigate_se() == "island3"
+                pirate.investigate_up()[0] == "island3"
+                or pirate.investigate_down()[0] == "island3"
+                or pirate.investigate_left()[0] == "island3"
+                or pirate.investigate_right()[0] == "island3"
+                or pirate.investigate_nw()[0] == "island3"
+                or pirate.investigate_ne()[0] == "island3"
+                or pirate.investigate_sw()[0] == "island3"
+                or pirate.investigate_se()[0] == "island3"
             ):
                 pirate._Pirate__myTeam._Team__flag3 = self.flag3
 
@@ -440,6 +440,7 @@ class Game:
             self.__blue_pirates, self.__red_pirates, False, False
         )
         to_kill = set()
+
         for b, r_list in removals.items():
 
             for r in r_list:
@@ -455,25 +456,22 @@ class Game:
 
                     self.__red_team._Team__gunpowder -= 100
                     self.__blue_team._Team__gunpowder -= 100
-                    self.__Pirates[r.rect.x // 20][r.rect.y // 20] = 0
-                    self.__Pirates[b.rect.x // 20][b.rect.y // 20] = 0
                     break
 
                 elif self.__blue_team._Team__gunpowder > 100:
                     to_kill.add(r)
                     self.__blue_team._Team__gunpowder -= 100
-                    self.__Pirates[r.rect.x // 20][r.rect.y // 20] = 2
 
                 elif self.__red_team._Team__gunpowder > 100:
                     to_kill.add(b)
                     self.__red_team._Team__gunpowder -= 100
-                    self.__Pirates[b.rect.x // 20][b.rect.y // 20] = 1
                     break
 
         for a in to_kill:
             del self.__PositionToPirate[(a.rect.x // 20, a.rect.y // 20)][a]
             a._Pirate__on_death((self.__island1, self.__island2, self.__island3))
             a.kill()
+
         return removals
 
     def buttons(self):
@@ -493,6 +491,14 @@ class Game:
         self.fast_rect.height += 20
         pygame.draw.rect(self.screen, LIGHT_GRAY, self.fast_rect)
         self.screen.blit(speed_up, ((self.__dim[0]) * 20 + 230, self.__dim[1] * 18))
+
+        # ss = button_font.render("SS", True, DARK_GREY)
+        # self.ss_rect = ss.get_rect()
+        # self.ss_rect.center = ((self.__dim[0]) * 20 + 258, self.__dim[1] * 18 + 5 - 40)
+        # self.ss_rect.width += 20
+        # self.ss_rect.height += 20
+        # pygame.draw.rect(self.screen, LIGHT_GRAY, self.ss_rect)
+        # self.screen.blit(ss, ((self.__dim[0]) * 20 + 230, self.__dim[1] * 18 - 40))
 
     def check_events(self):
         for event in pygame.event.get():
@@ -520,6 +526,27 @@ class Game:
                     <= self.fast_rect.y + self.slow_rect.height
                 ):
                     self.rate += 2
+                # elif (
+                #     self.ss_rect.x
+                #     <= mouse[0]
+                #     <= self.ss_rect.x + self.ss_rect.width
+                #     and self.ss_rect.y
+                #     <= mouse[1]
+                #     <= self.ss_rect.y + self.ss_rect.height
+                # ):
+                #         directory = f"{random.randint(1, 100000)}"
+                #         if os.path.exists(directory):
+                #             directory = f"{random.randint(1, 100000)}"
+                #         os.makedirs(directory)
+                #         file_name = f"{directory}/screenshot_{directory}.jpg"
+                #         rect = pygame.Rect(0, 0, 800, 800)
+                #         sub = self.screen.subsurface(rect)
+                #         pygame.image.save(sub, file_name)
+                #         number_names = np.array([
+                #             "B_", "Br", "Bb", "BB", "1_", "1r", "1b", "1B", "2_", "2r", "2b", "2B", "3_", "3r", "3b", "3B"
+                #         ])
+                #         number_names_array = number_names[self.__Pirates.T]
+                #         np.savetxt(f"C:/Users/PRANAV PRAKASH/Projects/codewars-v4/{directory}/pirates_{directory}.txt", number_names_array, fmt='%s', delimiter='|')
 
     def replenish(self):
         for i in range(0, self.__dim[0]):
@@ -699,33 +726,28 @@ class Game:
     def updatePirateMap(self):
         for i in range(0, self.__dim[0]):
             for j in range(0, self.__dim[1]):
-                self.__Pirates[i][j] = 0
+                self.__Pirates[i][j] &= ~0b11
+
         for key in self.__PositionToPirate.keys():
             value = self.__PositionToPirate[key]
             entr = 0
             for v in value:
-                if v == self.__island1:
-                    entr = 3
-                    break
-                if v == self.__island2:
-                    entr = 4
-                    break
-                if v == self.__island3:
-                    entr = 5
-                    break
+                if v.__class__.__name__ != "Pirate":
+                    continue
+                
                 if v.type == "red":
-                    entr = 1
+                    entr |= 1
                 else:
-                    entr = 2
-            self.__Pirates[key[0]][key[1]] = entr
+                    entr |= 2
+            self.__Pirates[key[0]][key[1]] |= entr
 
     def collect(self):
 
         for key in self.__PositionToPirate.keys():
             value = self.__PositionToPirate[key]
             if (
-                self.__Pirates[key[0]][key[1]] == 1
-                or self.__Pirates[key[0]][key[1]] == 2
+                self.__collectibles[key[0]][key[1]] != 0
+                and self.__Pirates[key[0]][key[1]] & 0b11
             ):
                 val = self.__collectibles[key[0]][key[1]]
                 self.__collectibles[key[0]][key[1]] = 0
@@ -733,6 +755,9 @@ class Game:
                 red = 0
                 blue = 0
                 for v in value:
+                    if v.__class__.__name__ != "Pirate":
+                        continue
+
                     if v.type == "red":
                         red += 1
                     else:

@@ -74,35 +74,44 @@ class Pirate(Sprite):
             self.__myTeam._Team__myGame._Game__PositionToPirate[
                 (self.rect.x // 20, self.rect.y // 20)
             ][self] = True
-        if self.type == "red":
-            self.__myTeam._Team__pirate_map[self.rect.x // 20][
-                self.rect.y // 20
-            ] = 1
-        else:
-            self.__myTeam._Team__pirate_map[self.rect.x // 20][
-                self.rect.y // 20
-            ] = 2
+        # if self.type == "red":
+        #     self.__myTeam._Team__pirate_map[self.rect.x // 20][
+        #         self.rect.y // 20
+        #     ] |= 1
+        # else:
+        #     self.__myTeam._Team__pirate_map[self.rect.x // 20][
+        #         self.rect.y // 20
+        #     ] |= 2
+
+    __wall_case = ("wall", "blank")
 
     def __investigate(self,x,y):
-        match(self.__myTeam._Team__myGame._Game__Pirates[x][y]):
+
+        who = 'blank'
+        where = 'blank'
+        match(self.__myTeam._Team__myGame._Game__Pirates[x][y] & 3):
             case 1:
                 if self.type == "red":
-                    return "friend"
+                    who = "friend"
                 else:
-                    return "enemy"
+                    who = "enemy"
             case 2:
                 if self.type == "red":
-                    return "enemy"
+                    who = "enemy"
                 else:
-                    return "friend"
+                    who = "friend"
             case 3:
-                return "island1"
-            case 4:
-                return "island2"
-            case 5:
-                return "island3"
-            case _:
-                return "blank"
+                who = "both"
+            
+        match(self.__myTeam._Team__myGame._Game__Pirates[x][y] >> 2):
+            case 1:
+                where = "island1"
+            case 2:
+                where = "island2"
+            case 3:
+                where = "island3"
+
+        return (where, who)
 
     def move_up(self, island1, island2, island3):
         if self.rect.y > 0:
@@ -174,27 +183,27 @@ class Pirate(Sprite):
 
     # player functions start here
             
-    def investigate_current_position(self):
+    def investigate_current(self):
         return self.__investigate(self.rect.x // 20, self.rect.y // 20)
 
     def investigate_up(self):
         if self.rect.y == 0:
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20, self.rect.y // 20 - 1)
 
     def investigate_down(self):
         if self.rect.y == (self.__myTeam._Team__myGame._Game__dim[1] - 1) * 20:
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20, self.rect.y // 20 + 1)     
 
     def investigate_left(self):
         if self.rect.x == 0:
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 - 1, self.rect.y // 20)
 
     def investigate_right(self):
         if self.rect.x == (self.__myTeam._Team__myGame._Game__dim[0] - 1) * 20:
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 + 1, self.rect.y // 20)
 
     def investigate_ne(self):
@@ -202,12 +211,12 @@ class Pirate(Sprite):
             self.rect.x == (self.__myTeam._Team__myGame._Game__dim[0] - 1) * 20
             or self.rect.y == 0
         ):
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 + 1, self.rect.y // 20 - 1)
 
     def investigate_nw(self):
         if self.rect.x == 0 or self.rect.y == 0:
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 - 1, self.rect.y // 20 - 1)
 
     def investigate_se(self):
@@ -215,7 +224,7 @@ class Pirate(Sprite):
             self.rect.x == (self.__myTeam._Team__myGame._Game__dim[0] - 1) * 20
             or self.rect.y == (self.__myTeam._Team__myGame._Game__dim[1] - 1) * 20
         ):
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 + 1, self.rect.y // 20 + 1)
 
     def investigate_sw(self):
@@ -223,7 +232,7 @@ class Pirate(Sprite):
             self.rect.x == 0
             or self.rect.y == (self.__myTeam._Team__myGame._Game__dim[1] - 1) * 20
         ):
-            return "wall"
+            return self.__wall_case
         return self.__investigate(self.rect.x // 20 - 1, self.rect.y // 20 + 1)
 
     def getTotalRum(self):
@@ -247,7 +256,7 @@ class Pirate(Sprite):
     def getDimensionY(self):
         return self.__myBase._Base__myGame._Game__dim[1]
     
-    def getInitialSignal(self):
+    def getID(self):
         return self.__initialSignal
 
     def getSignal(self):

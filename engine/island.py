@@ -30,10 +30,10 @@ class Island(Sprite):
         for i in range(-1, 2):
             for j in range(-1, 2):
                 self.coordi.append((self.__flag[0] + i, self.__flag[1] + j))
-                self.__pirate_map[self.__flag[0] + j][self.__flag[1] + i] = number + 2
+                self.__pirate_map[self.__flag[0] + j][self.__flag[1] + i] = number << 2
                 self.__myTeamGame._Game__Pirates[self.__flag[0] + j][
                     self.__flag[1] + i
-                ] = (number + 2)
+                ] |= number << 2
                 
         for coo in self.coordi:
             if coo != (self.__flag[0], self.__flag[1]):

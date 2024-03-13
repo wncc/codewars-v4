@@ -22,6 +22,7 @@ class Team:
         self.status3 = 0
         self.__curr_frame = -1
         self.__signal = ""
+        self.__created_count = 0
 
         for _ in range(80):
             x = random.randint(0, 39)
@@ -167,7 +168,8 @@ class Team:
     def respawn(self):
         for i in range(int(self.__rum // 50)):
             x, y = self.__base
-            self.create_Pirate(x * 20, y * 20, "")
+            self.__created_count += 1
+            self.create_Pirate(x * 20, y * 20, str(self.__created_count))
 
     # player functions start here
 
