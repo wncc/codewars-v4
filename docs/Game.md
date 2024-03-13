@@ -64,7 +64,7 @@ The primary action that a pirate can perform is to **move**, and to decide where
 
 Each pirate occupies exactly one tile at any time, and any tile that has one or more ships from a team will have a ship displayed on it.
 
-## 2. Communication Between Team and Pirates
+## Communication Between Team and Pirates
 
 There are three types of Signals in the game:
 
