@@ -19,6 +19,8 @@ Tiles are referred to based on their direction with respect to the pirate.
 
 ![The names used to refer to the tiles adjacent to the pirate](/docs/media/directions.jpg)
 
+- **`investigate_current_position()`** : This function is used to investigate the current location of the pirate.
+
 - **`investigate_up()`** : This function is used to investigate the area above the current location of the pirate.
 
 - **`investigate_left()`** : This function is used to investigate the area to the left of the current location of the pirate.
@@ -42,24 +44,49 @@ Each of the above functions returns one of the following strings, corresponding 
 - ***'island1', 'island2' or 'island3'*** if the tile is a part of an island
 - ***'blank'*** in all other cases
 
+## Info
+
+### `getTotalRum()`
+Returns the total amount of rum the team has.
+
+### `getTotalGunpowder()`
+Returns the total amount of gunpowder the team has.
+
+### `getTotalWood()`
+Returns the total amount of wood the team has.
+
+### `getPosition()`
+Returns the position of the pirate as a tuple `(x, y)`. 
+
+### `getDeployPoint()`
+Returns the coordinates of the deploy point of the team as a tuple `(x, y)`.
+
+### `getDimensionX()`
+Returns the X dimension of the game.
+
+### `getDimensionY()`
+Returns the Y dimension of the game.
+
 ## Signalling
 
-### `GetYourSignal()`
+### `GetInitialSignal()`
+Returns the initial signal of the pirate.
+
+### `getSignal()`
 Returns the current signal of the pirate.
 
 ### `setSignal(sig)`
 Sets the signal of the pirate to `sig` if `sig` is a string and its length is less than or equal to 20.
 
-### `GetCurrentTeamSignal()`
+### `getTeamSignal()`
 Returns the current signal of the team.
 
 ### `setTeamSignal(sig)`
 Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
 
-### `GetInitialSignal()`
-Returns the initial signal of the pirate.
-
-## Info
+### `getListofTeamSignals() -> str[]`
+Returns a list containing the signals of all the pirates in the team.
+This list is **read-only**, changing signals in the array will not change it for the pirate.
 
 ### `trackPlayers()`
 Returns a list of length 6, containing info on the current status of all the islands.
@@ -77,20 +104,5 @@ pirate.trackPLayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
 pirate.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
 ```
 
-### `GetTotalRum()`
-Returns the total amount of rum the team has.
-
-### `GetTotalGunpowder()`
-Returns the total amount of gunpowder the team has.
-
-### `GetTotalWood()`
-Returns the total amount of wood the team has.
-
-### `GetPosition()`
-Returns the position of the pirate as a tuple `(x, y)`. 
-
-### `GetDimensionX()`
-Returns the X dimension of the game.
-
-### `GetDimensionY()`
-Returns the Y dimension of the game.
+### `getCurrentFrame()`
+Returns the current time frame of the game
