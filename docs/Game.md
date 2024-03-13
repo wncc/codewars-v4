@@ -32,12 +32,18 @@ At the start of the team, both of the two teams are provided with `X` Rum, `X` W
 There are 3 resources that you will find scattered the map. Resources are collected by a team when their pirates move onto tiles that contain them. These resources are **shared commonly by the whole team**, and play different roles in the game:
 
 ### Rum
-Rum is used to spawn more pirates at the team's deploy point. It is used automatically at collection, and each pirate costs `50` Rum. 
+Rum is used to spawn more pirates at the team's deploy point. It is used automatically on collection, and each pirate costs `50` Rum. 
 
 Rum is never replenished, and is thus a limited resource on the Map.
 
 ### Wood
 Wood is used to build walls around islands the team is occupying. Building walls costs `50` Wood, and the team must decide when to use this resource. 
+
+When walls are built around an island, pirates within the walls cannot leave the island and pirates from outside cannot enter the island. A team can build walls around an island only if there are no enemy pirates in that island.
+
+Walls around an island are automatically dissolved after `50` timeframes.
+
+Each island also has a cooldown period of `35` timeframes, during which walls cannot be built around it.
 
 Wood is never replenished, and is thus a limited resource on the Map.
 
@@ -50,26 +56,20 @@ More specifically, if both teams have atleast `100` gunpowder, both pirates are 
 
 Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
-## Base
-
-The Base has the power to create robots and providing them with a signal while doing so. Apart from that, every robot could put up a signal of its own, which could only be read and interpreted at its parent base, to decide on future strategy.
-
-It could also deploy virus, if it gets surrounded by enemy bots.
-
 ## Pirates
 
 Pirates are the functional units of a team, that explore the map, collect resources and capture islands.
 
 The primary action that a pirate can perform is to **move**, and to decide where to move it can investigate its surroundings and communicate with its team via signals.
 
-Each ship occupies exactly one tile at any time, and any tile that has one or more ships from a team will have a boat displayed on it.
+Each pirate occupies exactly one tile at any time, and any tile that has one or more ships from a team will have a ship displayed on it.
 
-## 2. Communication Between Base and Robots
+## 2. Communication Between Team and Pirates
 
 There are three types of Signals in the game:
 
-1. Those passed onto Robots, when they are created (by the Base Function)
-2. Those which are put up by the base and could be read by all of its robots
-3. Those which are put up by robots and can be read by the parent base
+1. Those passed onto Robots, when they are created (by the Team)
+2. Those which are put up by the team and can be read by all of its pirates
+3. Those which are put up by pirates and can be read by the parent team
 
-These could be used to co-ordinate movements and strategise attacks/defence.
+These can be used to co-ordinate movements and strategize attacks/defence.
