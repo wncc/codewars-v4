@@ -34,8 +34,7 @@ class Island(Sprite):
                 self.__myTeamGame._Game__Pirates[self.__flag[0] + j][
                     self.__flag[1] + i
                 ] = (number + 2)
-                # self.island2.append((self.flag2[0] + i, self.flag2[1] + j))
-                # self.island3.append((self.flag3[0] + i, self.flag3[1] + j))
+                
         for coo in self.coordi:
             if coo != (self.__flag[0], self.__flag[1]):
                 self.walls.add(Wall(screen, coo[0] * 20, coo[1] * 20))
@@ -83,50 +82,10 @@ class Island(Sprite):
                 self.__status = -1
                 self.__reset()
 
-        # # blue was capturing, left and not red is capturing
-        # elif self.red_present and not self.blue_present and self.start_capture != -1 and self.capturing_team == 2:
-        #     self.start_capture = -1
-        #     if self.__status != 1:
-        #         self.capturing_team = 1
-        #     else:
-        #         self.capturing_team = None
-        # # red was capturing, left and not blue is capturing
-        # elif self.blue_present and not self.red_present and self.start_capture != -1 and self.capturing_team == 1:
-        #     self.start_capture = -1
-        #     if self.__status != -1:
-        #         self.capturing_team = 2
-        #     else:
-        #         self.capturing_team = None
-        # red captured
-
-        # if (
-        #     self.red_present
-        #     and not self.blue_present
-        #     and self.start_capture != -1
-        #     and self.capturing_team == 1
-        # ):
-        #     if self.__progress >= FRAMES_TO_CAPTURE:
-        #         self.__status = 1
-        #         self.start_capture = -1
-        #         self.capturing_team = None
-        # blue captured
-        # elif (
-        #     self.blue_present
-        #     and not self.red_present
-        #     and self.start_capture != -1
-        #     and self.capturing_team == 2
-        # ):
-        #     self.__progress = frame - self.start_capture
-        #     if self.__progress >= FRAMES_TO_CAPTURE:
-        #         self.__status = -1
-        #         self.start_capture = -1
-        #         self.capturing_team = None
         return self.__status
 
     def checkwall(self, frame):
         if self.red_wall and not self.blue_wall:
-            # if self.red_wall_frame == -1:
-            #     self.red_wall_frame = frame
             if frame - self.red_wall_frame >= 50:
                 self.red_wall = False
                 self.rebuild_frame = frame
@@ -138,6 +97,4 @@ class Island(Sprite):
                 self.blue_wall_frame = -1
 
         if self.red_wall or self.blue_wall:
-            # # print("HI")
-            # # print(self.walls)
             self.walls.draw(self.screen)

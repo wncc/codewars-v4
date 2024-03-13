@@ -6,7 +6,7 @@ def investigate(Pirate):
                 Pirate.investigate_sw(), Pirate.investigate_down(), Pirate.investigate_se())
 
 def moveTo(x, y, Pirate):
-        position=Pirate.GetPosition()
+        position=Pirate.getPosition()
         if position[0] == x and position[1] == y:
                 return 0
         if position[0] == x:
@@ -19,7 +19,7 @@ def moveTo(x, y, Pirate):
                 return (position[1]<y)*2+1
 
 def moveAway(x, y, Pirate):
-        position=Pirate.GetPosition()
+        position=Pirate.getPosition()
         if position[0] == x and position[1] == y:
                 return randint(1,4)
         if randint(1,2)==1:
@@ -28,7 +28,7 @@ def moveAway(x, y, Pirate):
                 return (position[1]>y)*2+1
 
 def circleAround(x, y, radius, Pirate, initial = "abc", clockwise=True):
-        position=Pirate.GetPosition()
+        position=Pirate.getPosition()
         rx=position[0]
         ry=position[1]
         pos=[[x+i,y+radius] for i in range(-1*radius,radius+1)]

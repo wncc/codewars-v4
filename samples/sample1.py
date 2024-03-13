@@ -1,7 +1,7 @@
 from random import randint
 
 def moveTo(x, y, Pirate):
-        position=Pirate.GetPosition()
+        position=Pirate.getPosition()
         if position[0] == x and position[1] == y:
                 return 0
         if position[0] == x:
@@ -19,7 +19,7 @@ def ActPirate(pirate):
         down = pirate.investigate_down()
         left = pirate.investigate_left()
         right = pirate.investigate_right()
-        x,y = pirate.GetPosition()
+        x,y = pirate.getPosition()
         pirate.setSignal('')
 
         if up == "island1" or up == "island2" or up == "island3":
@@ -40,8 +40,8 @@ def ActPirate(pirate):
                 s = down[-1] + str(x+1) + ',' + str(y)
                 pirate.setTeamSignal(s)
 
-        if pirate.getCurrentTeamSignal():
-               s = pirate.getCurrentTeamSignal()
+        if pirate.getTeamSignal():
+               s = pirate.getTeamSignal()
                l = s.split(',')
                x = int(l[0][1:])
                y = int(l[1])
@@ -52,7 +52,7 @@ def ActPirate(pirate):
         
 def ActTeam(team):
        l = team.trackPlayers()
-       s = team.GetYourSignal()
+       s = team.getTeamSignal()
 
        if s:
               island_no = int(s[0])
@@ -72,9 +72,9 @@ def ActTeam(team):
         #                 msg_y = str(y-1)
         #         msg = "team" + msg_x + msg_y
         #         pirate.setSignal(msg)
-        #         if pirate.GetVirus() > 500:
+        #         if pirate.getVirus() > 500:
                         # pirate.DeployVirus(500)
-        # if down == "enemy" and pirate.GetVirus() > 1000:
+        # if down == "enemy" and pirate.getVirus() > 1000:
         #         pirate.DeployVirus(100)
         # elif down == "enemy-team":
                 
@@ -88,10 +88,10 @@ def ActTeam(team):
         #                 msg_y = str(y+1)
         #         msg = "team" + msg_x + msg_y
         #         pirate.setSignal(msg)
-        #         if pirate.GetVirus() > 500:
+        #         if pirate.getVirus() > 500:
         #                 pirate.DeployVirus(500)
         
-        # if left == "enemy" and pirate.GetVirus() > 1000:
+        # if left == "enemy" and pirate.getVirus() > 1000:
         #         pirate.DeployVirus(100)
         # elif left == "enemy-team":
         #         if x - 1 < 10:
@@ -104,13 +104,13 @@ def ActTeam(team):
         #                 msg_y = str(y)
         #         msg = "team" + msg_x + msg_y
         #         pirate.setSignal(msg)
-        #         if pirate.GetVirus() > 500:
+        #         if pirate.getVirus() > 500:
         #                 pirate.DeployVirus(500)
                 
-        # if right == "enemy" and pirate.GetVirus() > 1000:
+        # if right == "enemy" and pirate.getVirus() > 1000:
         #         pirate.DeployVirus(100)
         # elif right == "enemy-team":
-        #         x,y = pirate.GetPosition()
+        #         x,y = pirate.getPosition()
         #         if x+1 < 10:
         #                 msg_x = '0' + str(x+1)
         #         else: 
@@ -121,17 +121,17 @@ def ActTeam(team):
         #                 msg_y = str(y)
         #         msg = "team" + msg_x + msg_y
         #         pirate.setSignal(msg)
-        #         if pirate.GetVirus() > 500:
+        #         if pirate.getVirus() > 500:
         #                 pirate.DeployVirus(500)
         
         
-        # if len(pirate.GetCurrentteamSignal()) > 0:
-        #         s = pirate.GetCurrentteamSignal()[4:]
+        # if len(pirate.getTeamSignal()) > 0:
+        #         s = pirate.getTeamSignal()[4:]
         #         sx = int(s[0:2])
         #         sy = int(s[2:4])
         #         dist = abs(sx-x) + abs(sy-y)
         #         if dist==1:
-        #                 pirate.DeployVirus(pirate.GetVirus()*0.75)
+        #                 pirate.DeployVirus(pirate.getVirus()*0.75)
         #                 return 0
         #         if x < sx:
         #                 return 2
@@ -150,12 +150,12 @@ def ActTeam(team):
     Add your code here
     
     '''
-    if team.GetElixir() > 700:
+    if team.getElixir() > 700:
         team.create_pirate('')
-    L = team.GetListOfSignals()
+    L = team.getListOfSignals()
     for l in L:
         if len(l) > 0:
-                team.SetYourSignal(l)
+                team.setTeamSignal(l)
                 return
 
     
