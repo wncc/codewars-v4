@@ -29,7 +29,7 @@ The values 0 to 4 that are returned by `ActPirate` each correspond to one of the
 
 ![](./media/movement.png)
 
-You are permitted to use the following Python modules for now:
+Some recommended modules you could use in your scripts:
 - random
 - math
 - numpy
