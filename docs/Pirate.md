@@ -66,7 +66,37 @@ sw[0] # 'enemy'
 sw[1] # 'island2'
 ```
 
+## Signalling
+
+### `getSignal()`
+Returns the current signal of the pirate.
+
+### `setSignal(sig)`
+Sets the signal of the pirate to `sig` if `sig` is a string and its length is less than or equal to 20.
+
+### `getTeamSignal()`
+Returns the current signal of the team.
+
+### `setTeamSignal(sig)`
+Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
+
 ## Info
+
+### `trackPlayers()`
+Returns a list of length 6, containing info on the current status of all the islands.
+
+The first three items correspond to the occupation of Island 1, 2 and 3 respectively by the pirate's team, and can take values `''`, `'myCapturing'` and `'myCaptured'`.
+
+The last three items correspond to the occupation of Island 1, 2 and 3 respectively by other team, and can take values `''`, `'oppCapturing'` and `'oppCaptured'`.
+
+Example:
+```py
+# All islands have been taken by opponent
+pirate.trackPlayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
+
+# Island 1 is yours, Island 2 is the opponent's but you are currently trying to capture it
+pirate.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
+```
 
 ### `getTotalRum()`
 Returns the total amount of rum the team has.
@@ -91,36 +121,6 @@ Returns the X dimension of the game.
 
 ### `getDimensionY()`
 Returns the Y dimension of the game.
-
-## Signalling
-
-### `getSignal()`
-Returns the current signal of the pirate.
-
-### `setSignal(sig)`
-Sets the signal of the pirate to `sig` if `sig` is a string and its length is less than or equal to 20.
-
-### `getTeamSignal()`
-Returns the current signal of the team.
-
-### `setTeamSignal(sig)`
-Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
-
-### `trackPlayers()`
-Returns a list of length 6, containing info on the current status of all the islands.
-
-The first three items correspond to the occupation of Island 1, 2 and 3 respectively by the pirate's team, and can take values `''`, `'myCapturing'` and `'myCaptured'`.
-
-The last three items correspond to the occupation of Island 1, 2 and 3 respectively by other team, and can take values `''`, `'oppCapturing'` and `'oppCaptured'`.
-
-Example:
-```py
-# All islands have been taken by opponent
-pirate.trackPlayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
-
-# Island 1 is yours, Island 2 is the opponent's but you are currently trying to capture it
-pirate.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
-```
 
 ### `getCurrentFrame()`
 Returns the current time frame of the game
