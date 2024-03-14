@@ -1,4 +1,4 @@
-# Game Overvie
+# Game Overview
  - [Map](#map)
   - [Team](#team)
   - [Islands](#islands)
