@@ -116,7 +116,7 @@ The last three items correspond to the occupation of Island 1, 2 and 3 respectiv
 Example:
 ```py
 # All islands have been taken by opponent
-pirate.trackPLayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
+pirate.trackPlayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
 
 # Island 1 is yours, Island 2 is the opponent's but you are currently trying to capture it
 pirate.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
