@@ -15,10 +15,6 @@ def moveTo(x , y , Pirate):
     else:
         return (position[1] < y) * 2 + 1
     
-    
-
-# def clear():
-    
 def checkfriends(pirate , quad ):
     sum = 0 
     up = pirate.investigate_up()
@@ -70,9 +66,6 @@ def spread(pirate):
     my_dict = {'sw': sw, 'se': se, 'ne': ne, 'nw': nw}
     sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1]))
 
-    # print(sorted_dict)
-    
-    # first_key = next(iter(sorted_dict))
     x, y = pirate.getPosition()
     
     if( x == 0 , y == 0):
@@ -89,8 +82,6 @@ def spread(pirate):
         return moveTo(x+1 , y-1 , pirate)
     elif(list(sorted_dict())[0] == 'nw'):
         return moveTo(x-1 , y-1 , pirate)
-  
-        
 
 def ActPirate(pirate):
     up = pirate.investigate_up()[0]
@@ -143,17 +134,6 @@ def ActPirate(pirate):
         return moveTo(x, y, pirate)
 
     else:
-        # # print("randint")
-        # return randint(1, 4)
-        # return spread(pirate)
-        # print(x , y)
-        # if(x == 5 ):
-        #     return moveTo(5,0,pirate)
-        # elif( y == 39 or y == 38 or y == 37  ):
-        #     return moveTo(0, 37,pirate)
-        
-        # else:
-        #     return moveTo(40,40,pirate)
         return spread(pirate)
 
 
@@ -164,10 +144,7 @@ def ActTeam(team):
     team.buildWalls(1)
     team.buildWalls(2)
     team.buildWalls(3)
-    
-    # team.getCurrentFrame()
-    # print(team.getTeamSignal())
-    # print(team.trackPlayers())
+
     if s:
         island_no = int(s[0])
         signal = l[island_no - 1]
