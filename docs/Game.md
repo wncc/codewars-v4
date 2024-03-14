@@ -1,9 +1,14 @@
-# Components
-1. [Map](#map)
-2. [Team](#team)
-3. [Resources](#resources)
-4. [Islands](#islands)
-5. [Pirates](#pirates)
+# Game Overview
+- [Game Overview](#game-overview)
+  - [Map](#map)
+  - [Team](#team)
+  - [Islands](#islands)
+  - [Resources](#resources)
+    - [Rum](#rum)
+    - [Wood](#wood)
+    - [Gunpowder](#gunpowder)
+  - [Pirates](#pirates)
+  - [Communication Between Team and Pirates](#communication-between-team-and-pirates)
 
 
 ## Map
@@ -26,13 +31,29 @@ There are two teams in the game: **Red** and **Blue**
 
 At the start of the team, both of the two teams are provided with `X` Rum, `X` Wood and `X` Gunpowder. Each team is also assigned one deploy point (see [Map](#map)).
 
+Note that a team does not refer to just a collection of pirates of the same color, but is also a separate entity in the game that can take actions that concern all its pirates as a whole.
 
+It is capable of communicating with its pirates via [signals](#communication-between-team-and-pirates). It is also responsible for building walls around the island to prevent other pirates from entering.
+
+## Islands
+There are three islands in the game, numbered 1, 2 and 3. Each of them has a distinct shape.
+
+![All the 3 islands in the game](./media/flags.png "All the 3 islands in the game")
+
+A team is said to exclusively occupy an island if:
+- Alteast one pirate from the team is present on any of the 9 tiles of the island
+- No pirates from the other team are present on any of the tiles of the island
+
+If a team exclusively occupies any island for `150` continuous cycles, they **capture** the island.
 
 ## Resources
 
 There are 3 resources that you will find scattered the map. Resources are collected by a team when their pirates move onto tiles that contain them. These resources are **shared commonly by the whole team**, and play different roles in the game:
 
+![](./media/resources.png)
+
 ### Rum
+
 Rum is used to spawn more pirates at the team's deploy point. It is used automatically on collection, and each pirate costs `50` Rum. 
 
 Rum is never replenished, and is thus a limited resource on the Map.
@@ -57,22 +78,23 @@ More specifically, if both teams have atleast `100` gunpowder, both pirates are 
 
 Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
-## Islands
-![All the 3 islands in the game](./media/flags.png "All the 3 islands in the game")
 ## Pirates
 
-Pirates are the functional units of a team, that explore the map, collect resources and capture islands.
+Pirates are the functional units of a team that explore the map, collect resources and capture islands.
 
 The primary action that a pirate can perform is to **move**, and to decide where to move it can investigate its surroundings and communicate with its team via signals.
 
 Each pirate occupies exactly one tile at any time, and any tile that has one or more pirates from a team will have a ship displayed on it.
 
+![](./media/pirates.png)
+
 ## Communication Between Team and Pirates
 
-There are three types of Signals in the game:
+A **signal** is simply put, a message that can be used as a means of communication and as a store of information between cycles.
 
-1. Those passed onto Robots, when they are created (by the Team)
-2. Those which are put up by the team and can be read by all of its pirates
-3. Those which are put up by pirates and can be read by the parent team
+There are two types of signals in the game:
 
-These can be used to co-ordinate movements and strategize attacks/defence.
+1. **Pirate signals**, that belong to a pirate specifically. Each pirate has one, and only they can change its value. Both they and their team can read this signal.
+2. **Team signals**, that belong to the team. The team and all the pirates in it can both read and change this signal.
+
+These signals can be used to co-ordinate movements and strategize attacks/defence.
