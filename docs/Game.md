@@ -1,6 +1,5 @@
-# Game Overview
-- [Game Overview](#game-overview)
-  - [Map](#map)
+# Game Overvie
+ - [Map](#map)
   - [Team](#team)
   - [Islands](#islands)
   - [Resources](#resources)
@@ -9,8 +8,6 @@
     - [Gunpowder](#gunpowder)
   - [Pirates](#pirates)
   - [Communication Between Team and Pirates](#communication-between-team-and-pirates)
-
-
 ## Map
 
 The Map is a randomly generated square grid of tiles (typically `40 x 40`), that contain 3 islands of size `3 x 3`, and collectible resources scattered across most of the remaining tiles.
