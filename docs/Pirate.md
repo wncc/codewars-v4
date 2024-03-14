@@ -50,6 +50,22 @@ Each of the above functions returns a tuple of two strings `(where, who)`, `wher
 - ***'both'*** if pirates from both teams are on the tile
 - ***'blank'*** in all other cases (<u>i.e.</u> no pirates)
 
+For example:
+
+<img src="./media/example.png" width="180" height="180" />
+
+```py
+# The 'pirate' variable here refers to the pirate at the centre
+pirate.investigate_down()    # ('island2', 'friend')
+pirate.investigate_up()      # ('wall', 'blank')
+pirate.investigate_left()    # ('blank', 'blank')
+pirate.investigate_right()   # ('enemy', 'blank')
+sw = pirate.investigate_sw() # ('enemy', 'island2')
+
+sw[0] # 'enemy'
+sw[1] # 'island2'
+```
+
 ## Info
 
 ### `getTotalRum()`

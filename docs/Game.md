@@ -2,8 +2,8 @@
 1. [Map](#map)
 2. [Team](#team)
 3. [Resources](#resources)
-4. [Base](#base)
-5. [Robots](#robots)
+4. [Islands](#islands)
+5. [Pirates](#pirates)
 
 
 ## Map
@@ -12,7 +12,8 @@ The Map is a randomly generated square grid of tiles (typically `40 x 40`), that
 
 The islands are spawned such that on symmetrically dividing the map into 4 quadrants, 3 of them have islands. The two opposite corners of the map in quadrants with islands are chosen, and set as the deploy points for each team's pirates (the location where new pirates are spawned). 
 
-![A screenshot of the Map mid-game](./media/screenshot.jpg)
+<img src="./media/screenshot.jpg" width="280" height="280" />
+
 > _A screenshot of the Map mid-game, with lines drawn to show the 4 quadrants_
 
 Whenever a pirate (or pirates) land on a tile with a resource, it gets distributed between both teams depending on the proportion of pirates present at that spot, and the resource is exhausted.
@@ -56,6 +57,8 @@ More specifically, if both teams have atleast `100` gunpowder, both pirates are 
 
 Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
+## Islands
+![All the 3 islands in the game](./media/flags.png "All the 3 islands in the game")
 ## Pirates
 
 Pirates are the functional units of a team, that explore the map, collect resources and capture islands.
