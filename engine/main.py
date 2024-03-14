@@ -112,20 +112,20 @@ class Game:
             if i == excluded:
                 continue
             if i == 0:
-                x = random.randint(4, self.__dim[0] / 2 - 4)
-                y = random.randint(4, self.__dim[1] / 2 - 4)
+                x = random.randint(4, self.__dim[0] // 2 - 4)
+                y = random.randint(4, self.__dim[1] // 2 - 4)
                 l.append((x, y))
             elif i == 1:
-                x = random.randint(self.__dim[0] / 2 + 4, self.__dim[0] - 4)
-                y = random.randint(4, self.__dim[1] / 2 - 4)
+                x = random.randint(self.__dim[0] // 2 + 4, self.__dim[0] - 4)
+                y = random.randint(4, self.__dim[1] // 2 - 4)
                 l.append((x, y))
             elif i == 2:
-                x = random.randint(4, self.__dim[0] / 2 - 4)
-                y = random.randint(self.__dim[1] / 2 + 4, self.__dim[1] - 4)
+                x = random.randint(4, self.__dim[0] // 2 - 4)
+                y = random.randint(self.__dim[1] // 2 + 4, self.__dim[1] - 4)
                 l.append((x, y))
             else:
-                x = random.randint(self.__dim[0] / 2 + 4, self.__dim[0] - 4)
-                y = random.randint(self.__dim[1] / 2 + 4, self.__dim[1] - 4)
+                x = random.randint(self.__dim[0] // 2 + 4, self.__dim[0] - 4)
+                y = random.randint(self.__dim[1] // 2 + 4, self.__dim[1] - 4)
                 l.append((x, y))
         return l + [base_red, base_blue]
 
