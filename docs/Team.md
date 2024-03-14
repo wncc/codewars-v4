@@ -51,6 +51,9 @@ team.trackPlayers() # ['','','','oppCaptured','oppCaptured','oppCaptured']
 team.trackPlayers() # ['myCaptured','myCapturing','','','oppCaptured','']
 ```
 
+### `getTotalPirates()`
+Returns the total number of pirates the team has.
+
 ### `getTotalRum()`
 Returns the total amount of rum the team has.
 

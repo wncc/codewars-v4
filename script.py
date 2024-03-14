@@ -52,16 +52,12 @@ def circleAround(x, y, radius, Pirate, initial="abc", clockwise=True):
             Pirate,
         )
     
-def checkForIsland(pirate):
+def checkIsland(pirate):
     up = pirate.investigate_up()
     down = pirate.investigate_down()
     left = pirate.investigate_left()
     right = pirate.investigate_right()
-    if (up == "island1" or down == "island1") and (left == "island1" or right == "island1"):
-        return True
-    if (up == "island2" or down == "island2") and (left == "island2"or right == "island2"):
-        return True
-    if (up == "island3" or down == "island3") and (left == "island3" or right == "island3"):
+    if (up[0:-1] == "island" or down[0:-1] == "island") and (left[0:-1] == "island" or right[0:-1] == "island"):
         return True
     else:
         return False

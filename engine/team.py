@@ -32,7 +32,7 @@ class Team:
     def create_Pirate(self, x, y, signal):
         if self.__rum >= 50:
             str = "wncc"
-            if type(signal) != type(str) or len(signal) > 20:
+            if type(signal) != type(str):
                 signal = ""
             self.__rum -= 50
 
@@ -178,7 +178,7 @@ class Team:
 
     def setTeamSignal(self, s):
         str = "wncc"
-        if type(s) != type(str) or len(s) > 20:
+        if type(s) != type(str):
             return
         self.__signal = s
 
@@ -193,6 +193,9 @@ class Team:
             return self.__myGame.island_status_red
         else:
             return self.__myGame.island_status_blue
+        
+    def getTotalPirates(self):
+        return len(self.__pirate_list)
 
     def getTotalRum(self):
         return self.__rum
