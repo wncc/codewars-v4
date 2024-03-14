@@ -12,7 +12,7 @@ The Map is a randomly generated square grid of tiles (typically `40 x 40`), that
 
 The islands are spawned such that on symmetrically dividing the map into 4 quadrants, 3 of them have islands. The two opposite corners of the map in quadrants with islands are chosen, and set as the deploy points for each team's pirates (the location where new pirates are spawned). 
 
-<img src="./media/screenshot.jpg" width="280" height="280" />
+<img src="./media/screenshot.jpg" width="360" height="360" />
 
 > _A screenshot of the Map mid-game, with lines drawn to show the 4 quadrants_
 
