@@ -28,6 +28,7 @@ class Game:
         self.fps_controller = pygame.time.Clock()
         self.__sea = Group()
         self.__dim = dim
+        self.__frame = 0
         self.rate = 20
         self.explosion = pygame.image.load("images/explode.png")
         self.screen = pygame.display.set_mode(
@@ -178,6 +179,7 @@ class Game:
         while True:
             iter += 1
             if iter <= 3000:
+                self.__frame = iter
                 self.screen.fill(DARK_GREY)
                 moves = {}
 
