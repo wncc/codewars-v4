@@ -26,7 +26,7 @@ Most of these resources are not replenished (see [Resources](#resources)).
 
 There are two teams in the game: **Red** and **Blue**
 
-At the start of the team, both of the two teams are provided with `X` Rum, `X` Wood and `X` Gunpowder. Each team is also assigned one deploy point (see [Map](#map)).
+At the start of the team, both of the two teams are provided with `400` Rum, `150` Wood and `500` Gunpowder. Each team is also assigned one deploy point (see [Map](#map)).
 
 Note that a team does not refer to just a collection of pirates of the same color, but is also a separate entity in the game that can take actions that concern all its pirates as a whole.
 
@@ -53,7 +53,7 @@ There are 3 resources that you will find scattered the map. Resources are collec
 
 Rum is used to spawn more pirates at the team's deploy point. It is used automatically on collection, and each pirate costs `50` Rum. 
 
-Rum is never replenished, and is thus a limited resource on the Map.
+Each tile of Rum can give a total of `75` Rum. Rum is never replenished, and is thus a limited resource on the Map.
 
 ### Wood
 Wood is used to build walls around islands the team is occupying. Building walls costs `50` Wood, and the team must decide when to use this resource. 
@@ -64,7 +64,7 @@ Walls around an island are automatically dissolved after `50` timeframes.
 
 Each island also has a cooldown period of `35` timeframes, during which walls cannot be built around it.
 
-Wood is never replenished, and is thus a limited resource on the Map.
+Each tile of Wood can give a total of `25` Wood. Wood is never replenished, and is thus a limited resource on the Map.
 
 ### Gunpowder
 Gunpowder is an important resource used in battles, when pirates come in contact with each other <u>i.e.</u> move onto the same tile.
@@ -73,7 +73,7 @@ If the pirate's team has atleast `100` Gunpowder, then the pirate destroys the e
 
 More specifically, if both teams have atleast `100` gunpowder, both pirates are killed. If only one team has atleast `100` gunpowder, only the enemy pirate is killed. If both teams have less than `100` gunpowder, neither pirate is killed.
 
-Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
+Each tile of Gunpowder can give a total of `50` Gunpowder. Gunpowder is periodically replenished on the Map if its amount falls below a certain threshold.
 
 ## Pirates
 
