@@ -43,7 +43,7 @@ def positionInIsland(pirate):
     if up[0:-1] == "island" and down[0:-1] == "island" and right[0:-1] == "island" and left[0:-1] == "island":
         return "centre"    
     if up[0:-1] != "island" and right[0:-1] == "island" and left[0:-1] != "island" and down[0:-1] == "island":
-        return "toprleft"
+        return "topleft"
     if up[0:-1] != "island" and right[0:-1] != "island" and left[0:-1] == "island" and down[0:-1] == "island":
         return "topright"
     if up[0:-1] == "island" and right[0:-1] != "island" and left[0:-1] == "island" and down[0:-1] != "island":
@@ -51,18 +51,15 @@ def positionInIsland(pirate):
     if up[0:-1] == "island" and right[0:-1] == "island" and left[0:-1] != "island" and down[0:-1] != "island":
         return "bottomleft"
     if up[0:-1] == "island" and down[0:-1] == "island" and left[0:-1] == "island" and right[0:-1] != "island":
-        return "midlright"
+        return "middleright"
     if up[0:-1] == "island" and down[0:-1] == "island" and left[0:-1] != "island" and right[0:-1] == "island":
-        return "midleft"
+        return "middleleft"
     if up[0:-1] != "island" and down[0:-1] == "island" and left[0:-1] == "island" and right[0:-1] == "island":
-        return "topmid"
+        return "topmiddle"
     if up[0:-1] == "island" and down[0:-1] != "island" and left[0:-1] == "island" and right[0:-1] == "island":
-        return "bottommid"
-    
-
+        return "bottommiddle"
     
 def ActPirate(pirate):
-    # # print("hell")
     up = pirate.investigate_up()
     down = pirate.investigate_down()
     left = pirate.investigate_left()
@@ -70,8 +67,7 @@ def ActPirate(pirate):
     x, y = pirate.GetPosition()
     pirate.setSignal("")
     s = pirate.trackPlayers()
-    # # print(s)
-    # # print(pirate.GetCurrentTeamSignal())
+    
     if (
         (up == "island1" and s[0] != "myCaptured")
         or (up == "island2" and s[1] != "myCaptured")
@@ -80,7 +76,6 @@ def ActPirate(pirate):
         s = up[-1] + str(x) + "," + str(y - 1)
         b += 1
         pirate.setSignal("mid")
-        # pirate.SetTeamSignal(s)
 
     if (
         (down == "island1" and s[0] != "myCaptured")
@@ -91,8 +86,6 @@ def ActPirate(pirate):
         b += 1
         pirate.setSignal("mid")
 
-        # pirate.SetTeamSignal(s)
-
     if (
         (left == "island1" and s[0] != "myCaptured")
         or (left == "island2" and s[1] != "myCaptured")
@@ -100,7 +93,6 @@ def ActPirate(pirate):
     ):
         s = left[-1] + str(x - 1) + "," + str(y)
         b += 1
-        # pirate.SetTeamSignal(s)
 
         pirate.setSignal("mid")
 
@@ -112,7 +104,6 @@ def ActPirate(pirate):
     ):
         s = right[-1] + str(x + 1) + "," + str(y)
         b += 1
-        # pirate.SetTeamSignal(s)
         pirate.setSignal("mid")
 
 
@@ -199,9 +190,7 @@ def ActPirate(pirate):
         else:
             pirate.setSignal("random")
 
-    # print(pirate.GetCurrentTeamSignal())
     if pirate.GetYourSignal() =="mid":
-        # print("highsoefji")
         return 0
 
     elif pirate.GetYourSignal() == "move":

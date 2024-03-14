@@ -145,7 +145,7 @@ class Team:
         y = y * 20
 
         if type == -1:
-            self.__rum += 20 * frac
+            self.__rum += 75 * frac
 
             for i in self.__myGame._Game__rum:
                 if i.rect == (x, y, 20, 20):
