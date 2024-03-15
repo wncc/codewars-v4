@@ -59,11 +59,11 @@ For example:
 pirate.investigate_down()    # ('island2', 'friend')
 pirate.investigate_up()      # ('wall', 'blank')
 pirate.investigate_left()    # ('blank', 'blank')
-pirate.investigate_right()   # ('enemy', 'blank')
-sw = pirate.investigate_sw() # ('enemy', 'island2')
+pirate.investigate_right()   # ('blank', 'enemy')
+sw = pirate.investigate_sw() # ('island2', 'enemy')
 
-sw[0] # 'enemy'
-sw[1] # 'island2'
+sw[0] # 'island2'
+sw[1] # 'enemy'
 ```
 
 ## Signalling
