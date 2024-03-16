@@ -68,10 +68,10 @@ def spread(pirate):
 
     x, y = pirate.getPosition()
     
-    if( x == 0 , y == 0):
+    if( x == 0 and y == 0):
         return randint(1,4)
     
-    if(sorted_dict[list(sorted_dict())[3]] == 0 ):
+    if(sorted_dict[list(sorted_dict.keys())[3]] == 0 ):
         return randint(1,4)
     
     if(list(sorted_dict())[0] == 'sw'):
