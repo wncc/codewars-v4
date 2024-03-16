@@ -207,7 +207,7 @@ class Team:
         return self.__wood
 
     def getDeployPoint(self):
-        return (self.rect.x // 20, self.rect.y // 20)
+        return (self.base[0], self.base[1])
 
     def getDimensionX(self):
         return self.__myGame._Game__dim[0]
