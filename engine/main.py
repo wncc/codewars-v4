@@ -286,11 +286,11 @@ class Game:
                 self.__island2.checkwall(iter)
                 self.__island3.checkwall(iter)
 
-                self.__rscript.ActTeam(self.__red_team)
-                self.__bscript.ActTeam(self.__blue_team)
-
                 try:
-                    current_script_name = ''
+                    current_script_name = self.rname
+                    self.__rscript.ActTeam(self.__red_team)
+                    current_script_name = self.bname
+                    self.__bscript.ActTeam(self.__blue_team)
                     if rnd() > 0.5:
                         current_script_name = self.rname
                         for pirate_i in self.__red_pirates:
