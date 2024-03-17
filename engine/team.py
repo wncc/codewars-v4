@@ -31,9 +31,6 @@ class Team:
 
     def create_Pirate(self, x, y):
         if self.__rum >= 50:
-            str = "wncc"
-            if type(signal) != type(str):
-                signal = ""
             self.__rum -= 50
             self.__created_count += 1
             pirate_i = Pirate(self.screen, x, y, self.__type, self, str(self.__created_count))
