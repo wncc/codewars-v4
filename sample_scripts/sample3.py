@@ -5,7 +5,7 @@ name = "sample3"
 
 
 def moveTo(x, y, Pirate):
-    position = Pirate.GetPosition()
+    position = Pirate.getPosition()
     if position[0] == x and position[1] == y:
         return 0
     if position[0] == x:
@@ -18,7 +18,7 @@ def moveTo(x, y, Pirate):
         return (position[1] < y) * 2 + 1
 
 def setthem(pirate):
-    s = pirate.GetCurretPosition()
+    s = pirate.getPosition()
     x = s[0]
     y = s[1]
 
@@ -39,7 +39,7 @@ def positionInIsland(pirate):
     down = pirate.investige_down()
     right = pirate.investige_right()
     left = pirate.investige_left()
-    x, y = pirate.GetPosition()
+    x, y = pirate.getPosition()
     if up[0:-1] == "island" and down[0:-1] == "island" and right[0:-1] == "island" and left[0:-1] == "island":
         return "centre"    
     if up[0:-1] != "island" and right[0:-1] == "island" and left[0:-1] != "island" and down[0:-1] == "island":
@@ -64,7 +64,7 @@ def ActPirate(pirate):
     down = pirate.investigate_down()
     left = pirate.investigate_left()
     right = pirate.investigate_right()
-    x, y = pirate.GetPosition()
+    x, y = pirate.getPosition()
     pirate.setSignal("")
     s = pirate.trackPlayers()
     
@@ -190,25 +190,25 @@ def ActPirate(pirate):
         else:
             pirate.setSignal("random")
 
-    if pirate.GetYourSignal() =="mid":
+    if pirate.getSignal() =="mid":
         return 0
 
-    elif pirate.GetYourSignal() == "move":
+    elif pirate.getSignal() == "move":
         s = pirate.GetCurrentTeamSignal()
         l = s.split(",")
         x = int(l[0][1:])
         y = int(l[1])
         return moveTo(x, y, pirate)
     
-    elif pirate.GetYourSignal() == "random":
+    elif pirate.getSignal() == "random":
         return random.randint(1,4)
 
 def ActTeam(team):
     l = team.trackPlayers()
-    s = team.GetYourSignal()
+    s = team.getTeamSignal()
 
     if s:
         island_no = int(s[0])
         signal = l[island_no - 1]
         if signal == "myCaptured":
-            team.SetYourSignal("")
+            team.setTeamSignal("")
