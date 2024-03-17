@@ -17,14 +17,15 @@ def moveTo(x , y , Pirate):
     
 def checkfriends(pirate , quad ):
     sum = 0 
-    up = pirate.investigate_up()
-    down = pirate.investigate_down()
-    left = pirate.investigate_left()
-    right = pirate.investigate_right()
-    ne = pirate.investigate_ne()
-    nw = pirate.investigate_nw()
-    se = pirate.investigate_se()
-    sw = pirate.investigate_sw()
+    up = pirate.investigate_up()[1]
+    print(up)
+    down = pirate.investigate_down()[1]
+    left = pirate.investigate_left()[1]
+    right = pirate.investigate_right()[1]
+    ne = pirate.investigate_ne()[1]
+    nw = pirate.investigate_nw()[1]
+    se = pirate.investigate_se()[1]
+    sw = pirate.investigate_sw()[1]
     
     if(quad=='ne'):
         if(up == 'friend'):
