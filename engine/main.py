@@ -198,6 +198,11 @@ class Game:
                     self.island_status_blue[0] = "myCaptured"
                     self.island_status_red[0] = ""
                     self.island_status_blue[3] = ""
+                else:
+                    self.island_status_red[3] = ""
+                    self.island_status_blue[0] = ""
+                    self.island_status_red[0] = ""
+                    self.island_status_blue[3] = ""
                 if status2 == 1:
                     self.island_status_red[1] = "myCaptured"
                     self.island_status_blue[4] = "oppCaptured"
@@ -206,6 +211,11 @@ class Game:
                 elif status2 == -1:
                     self.island_status_red[4] = "oppCaptured"
                     self.island_status_blue[1] = "myCaptured"
+                    self.island_status_red[1] = ""
+                    self.island_status_blue[4] = ""
+                else:
+                    self.island_status_red[4] = ""
+                    self.island_status_blue[1] = ""
                     self.island_status_red[1] = ""
                     self.island_status_blue[4] = ""
                 if status3 == 1:
@@ -218,6 +228,11 @@ class Game:
                     self.island_status_blue[2] = "myCaptured"
                     self.island_status_red[2] = ""
                     self.island_status_blue[5] = ""
+                else:
+                    self.island_status_red[5] = ""
+                    self.island_status_blue[2] = ""
+                    self.island_status_red[2] = ""
+                    self.island_status_blue[5] = ""
 
                 if self.__island1.capturing_team == 1:  # red
                     self.island_status_red[0] = "myCapturing"
@@ -226,6 +241,7 @@ class Game:
 
                     self.island_status_red[3] = "oppCapturing"
                     self.island_status_blue[0] = "myCapturing"
+
                 if self.__island2.capturing_team == 1:  # red
 
                     self.island_status_red[1] = "myCapturing"
