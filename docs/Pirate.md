@@ -72,13 +72,13 @@ sw[1] # 'enemy'
 Returns the current signal of the pirate.
 
 ### `setSignal(sig)`
-Sets the signal of the pirate to `sig` if `sig` is a string and its length is less than or equal to 20.
+Sets the signal of the pirate to `sig` if `sig` is a string and its length is less than or equal to 100.
 
 ### `getTeamSignal()`
 Returns the current signal of the team.
 
 ### `setTeamSignal(sig)`
-Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 20.
+Sets the signal of the pirate's team to `sig` if `sig` is a string and its length is less than or equal to 100.
 
 ## Info
 
