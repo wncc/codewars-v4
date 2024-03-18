@@ -31,6 +31,7 @@ class Game:
         self.__frame = 0
         self.rate = 20
         self.explosion = pygame.image.load("images/explode.png")
+        self.purple_pirate = pygame.image.load("images/piratepurple.png")
         self.screen = pygame.display.set_mode(
             (self.__dim[0] * 20 + 400, self.__dim[1] * 20)
         )
@@ -332,7 +333,7 @@ class Game:
                             self.__island1, self.__island2, self.__island3
                         )
 
-                collisions = self.check_collisions()
+                collisions, overlaps = self.check_collisions()
                 self.__rum.draw(self.screen)
                 self.__gunpowder.draw(self.screen)
                 self.__wood.draw(self.screen)
@@ -346,8 +347,12 @@ class Game:
                 self.update_score()
                 self.collect()
 
-                for b in collisions.keys():
-                    self.screen.blit(self.explosion, (b.rect.x, b.rect.y))
+                for rect in overlaps:
+                    self.screen.blit(self.purple_pirate, rect)
+
+                for rect in collisions:
+                    self.screen.blit(self.explosion, rect)
+
 
                 if iter % 10 == 0:
                     self.replenish()
@@ -440,31 +445,48 @@ class Game:
             self.__blue_pirates, self.__red_pirates, False, False
         )
         to_kill = set()
+        blast_positions = []
+        both_positions = []
 
         for b, r_list in removals.items():
-
+            blast_added = False
             for r in r_list:
                 if r in to_kill:
                     continue
 
                 if (
-                    self.__blue_team._Team__gunpowder > 100
-                    and self.__red_team._Team__gunpowder > 100
+                    self.__blue_team._Team__gunpowder >= 100
+                    and self.__red_team._Team__gunpowder >= 100
                 ):
                     to_kill.add(r)
                     to_kill.add(b)
 
                     self.__red_team._Team__gunpowder -= 100
                     self.__blue_team._Team__gunpowder -= 100
+
+                    if not blast_added:
+                        blast_added = True
+                        blast_positions.append(b.rect)
                     break
 
-                elif self.__blue_team._Team__gunpowder > 100:
+                elif self.__blue_team._Team__gunpowder >= 100:
                     to_kill.add(r)
                     self.__blue_team._Team__gunpowder -= 100
 
-                elif self.__red_team._Team__gunpowder > 100:
+                    if not blast_added:
+                        blast_added = True
+                        blast_positions.append(b.rect)
+
+                elif self.__red_team._Team__gunpowder >= 100:
                     to_kill.add(b)
                     self.__red_team._Team__gunpowder -= 100
+
+                    if not blast_added:
+                        blast_added = True
+                        blast_positions.append(b.rect)
+                    break
+                else:
+                    both_positions.append(b.rect)
                     break
 
         for a in to_kill:
@@ -472,7 +494,7 @@ class Game:
             a._Pirate__on_death((self.__island1, self.__island2, self.__island3))
             a.kill()
 
-        return removals
+        return blast_positions, both_positions
 
     def buttons(self):
         button_font = pygame.font.SysFont(None, 36)
