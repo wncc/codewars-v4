@@ -251,10 +251,10 @@ class Pirate(Sprite):
         return self.__myTeam.getDeployPoint()
 
     def getDimensionX(self):
-        return self.__myBase._Base__myGame._Game__dim[0]
+        return self.__myTeam._Team__myGame._Game__dim[0]
 
     def getDimensionY(self):
-        return self.__myBase._Base__myGame._Game__dim[1]
+        return self.__myTeam._Team__myGame._Game__dim[0]
     
     def getID(self):
         return self.__initialSignal
