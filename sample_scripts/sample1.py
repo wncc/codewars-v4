@@ -1,7 +1,7 @@
 import random
 import math
 
-name = "sample1"
+name = "scriptblue"
 
 
 def moveTo(x, y, Pirate):
@@ -19,10 +19,10 @@ def moveTo(x, y, Pirate):
 
 
 def ActPirate(pirate):
-    up = pirate.investigate_up()
-    down = pirate.investigate_down()
-    left = pirate.investigate_left()
-    right = pirate.investigate_right()
+    up = pirate.investigate_up()[0]
+    down = pirate.investigate_down()[0]
+    left = pirate.investigate_left()[0]
+    right = pirate.investigate_right()[0]
     x, y = pirate.getPosition()
     pirate.setSignal("")
     s = pirate.trackPlayers()
@@ -79,7 +79,8 @@ def ActTeam(team):
     team.buildWalls(1)
     team.buildWalls(2)
     team.buildWalls(3)
-
+    # print(team.getTeamSignal())
+    # print(team.trackPlayers())
     if s:
         island_no = int(s[0])
         signal = l[island_no - 1]
