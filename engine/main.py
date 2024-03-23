@@ -333,6 +333,10 @@ class Game:
                     messagebox.showerror('Script Error', f'{current_script_name} threw an error:\n{e}\n\nPlease check the error_log.txt file for more details.')
                     exit(0)
 
+                self.__island1.drawWalls()
+                self.__island2.drawWalls()
+                self.__island3.drawWalls()
+
                 for pirate_i, n in moves.items():
                     if n == 1:
                         pirate_i.move_up(self.__island1, self.__island2, self.__island3)

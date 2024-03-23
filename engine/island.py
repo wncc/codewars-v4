@@ -24,7 +24,7 @@ class Island(Sprite):
         self.capturing_team = None
         self.red_wall_frame = -1
         self.blue_wall_frame = -1
-        self.rebuild_frame = -1
+        self.rebuild_frame = -100 # Otherwise, the check in teams would think this was rebuilt just 1 game before game start
         self.__myTeamGame = game
         self.walls = Group()
         for i in range(-1, 2):
@@ -96,5 +96,7 @@ class Island(Sprite):
                 self.rebuild_frame = frame
                 self.blue_wall_frame = -1
 
+
+    def drawWalls(self):
         if self.red_wall or self.blue_wall:
             self.walls.draw(self.screen)
